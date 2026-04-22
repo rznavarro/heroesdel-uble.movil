@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-serif: "Playfair Display", serif;
+  
+  --color-vortex-dark: #05070a;
+  --color-vortex-surface: #0a0e14;
+  --color-vortex-accent: #cc0000;
+  --color-vortex-border: #1e293b;
+}
+
+@layer base {
+  body {
+    @apply bg-vortex-dark text-slate-300 font-sans antialiased;
+  }
+}
+
+@layer components {
+  .vortex-card {
+    @apply bg-slate-900/40 border border-slate-800 rounded-lg overflow-hidden transition-all;
+  }
+  
+  .vortex-input {
+    @apply bg-vortex-dark border border-slate-800 rounded-lg px-4 py-2 outline-none focus:border-vortex-accent transition-colors text-white;
+  }
+  
+  .vortex-button-primary {
+    @apply bg-vortex-accent hover:bg-red-700 text-white font-bold px-6 py-2 rounded transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none uppercase tracking-widest text-[10px];
+  }
+
+  .vortex-button-secondary {
+    @apply border border-slate-800 hover:border-vortex-accent/50 text-slate-400 hover:text-white px-6 py-2 rounded transition-all uppercase tracking-widest text-[10px];
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #05070a;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
