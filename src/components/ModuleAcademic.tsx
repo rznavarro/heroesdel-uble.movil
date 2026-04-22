@@ -16,6 +16,7 @@ import {
   Languages
 } from 'lucide-react';
 import { UserProfile, Guide, Note } from '../types';
+import { supabase } from '../lib/supabase';
 
 interface ModuleAcademicProps {
   profile: UserProfile;
@@ -67,7 +68,7 @@ export default function ModuleAcademic({
     if (!file) return;
 
     const newGuide: Guide = {
-      id: Math.random().toString(36).substr(2, 9),
+      id: crypto.randomUUID(),
       title: file.name,
       date: new Date().toLocaleDateString('es-CL'),
       status: 'PENDING',
@@ -90,7 +91,7 @@ export default function ModuleAcademic({
     if (!newNote.text.trim()) return;
 
     const note: Note = {
-      id: Math.random().toString(36).substr(2, 9),
+      id: crypto.randomUUID(),
       tag: newNote.tag,
       text: newNote.text,
       date: new Date().toLocaleDateString('es-CL'),
@@ -270,7 +271,13 @@ export default function ModuleAcademic({
               </div>
               <button 
                 onClick={async () => {
-                  await fetch(`/api/notes/${note.id}`, { method: 'DELETE' });
+                  try {
+                    // Aquí podrías agregar lógica para actualizar la UI en el padre,
+                    // por ahora se actualizará en el próximo polling o recarga.
+                    await supabase.from('notes').delete().eq('id', note.id);
+                  } catch (e) {
+                    console.error("Error al borrar nota:", e);
+                  }
                 }}
                 className="opacity-0 group-hover:opacity-100 text-slate-700 hover:text-red-500 transition-all"
               >

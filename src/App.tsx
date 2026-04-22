@@ -9,25 +9,51 @@ import { motion, AnimatePresence } from 'motion/react';
 import { VORTEX_PROFILES } from './data/profiles';
 import { UserProfile } from './types';
 import { ChevronLeft, Grid, Maximize, Minimize, Focus } from 'lucide-react';
+import { supabase } from './lib/supabase';
 
 export default function App() {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [activeTab, setActiveTab] = useState('hub');
   const [isInitializing, setIsInitializing] = useState(true);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [globalData, setGlobalData] = useState<{ guides: any[], notes: any[] }>({ guides: [], notes: [] });
+  const [globalData, setGlobalData] = useState<{ guides: any[], notes: any[] }>(() => {
+    const saved = localStorage.getItem('vortex_global_data');
+    return saved ? JSON.parse(saved) : { guides: [], notes: [] };
+  });
 
-  // Sync with server every 10 seconds (basic polling instead of sockets for now)
+  // Sync with Supabase
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('/api/data');
-        if (res.ok) {
-          const data = await res.json();
-          setGlobalData(data);
-        }
+        const [guidesRes, notesRes] = await Promise.all([
+          supabase.from('guides').select('*').order('created_at', { ascending: false }),
+          supabase.from('notes').select('*').order('created_at', { ascending: false })
+        ]);
+        
+        if (guidesRes.error) throw guidesRes.error;
+        if (notesRes.error) throw notesRes.error;
+        
+        const guides = guidesRes.data.map(g => ({
+          id: g.id,
+          title: g.title,
+          date: new Date(g.date).toLocaleDateString('es-CL'),
+          status: g.status,
+          category: g.category,
+          fileUrl: g.file_url
+        }));
+        
+        const notes = notesRes.data.map(n => ({
+          id: n.id,
+          tag: n.tag,
+          text: n.text,
+          date: new Date(n.date).toLocaleDateString('es-CL')
+        }));
+
+        const newData = { guides, notes };
+        setGlobalData(newData);
+        localStorage.setItem('vortex_global_data', JSON.stringify(newData));
       } catch (err) {
-        console.error("Error fetching global data:", err);
+        console.error("Error fetching from Supabase:", err);
       }
     };
 
@@ -38,33 +64,44 @@ export default function App() {
 
   const addGlobalGuide = async (guide: any) => {
     try {
-      const res = await fetch('/api/guides', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(guide)
-      });
-      if (res.ok) {
-        const newGuide = await res.json();
-        setGlobalData(prev => ({ ...prev, guides: [newGuide, ...prev.guides] }));
-      }
+      // Guardado local inmediato para no esperar (Optimistic UI)
+      const newGlobalData = { ...globalData, guides: [guide, ...globalData.guides] };
+      setGlobalData(newGlobalData);
+      localStorage.setItem('vortex_global_data', JSON.stringify(newGlobalData));
+
+      // Guardar en Supabase (si tiene un UUID falso, Supabase lo ignorará o podemos no enviarlo)
+      const { error } = await supabase.from('guides').insert([{
+        id: guide.id, // Pasamos el UUID generado en el frontend
+        title: guide.title,
+        category: guide.category,
+        status: guide.status || 'PENDING',
+        date: new Date().toISOString().split('T')[0]
+      }]);
+
+      if (error) throw error;
     } catch (err) {
-      console.error("Error adding guide:", err);
+      console.error("Error adding guide to Supabase:", err);
     }
   };
 
   const addGlobalNote = async (note: any) => {
     try {
-      const res = await fetch('/api/notes', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(note)
-      });
-      if (res.ok) {
-        const newNote = await res.json();
-        setGlobalData(prev => ({ ...prev, notes: [newNote, ...prev.notes] }));
-      }
+      // Guardado local inmediato
+      const newGlobalData = { ...globalData, notes: [note, ...globalData.notes] };
+      setGlobalData(newGlobalData);
+      localStorage.setItem('vortex_global_data', JSON.stringify(newGlobalData));
+
+      // Guardar en Supabase
+      const { error } = await supabase.from('notes').insert([{
+        id: note.id,
+        tag: note.tag,
+        text: note.text,
+        date: new Date().toISOString().split('T')[0]
+      }]);
+
+      if (error) throw error;
     } catch (err) {
-      console.error("Error adding note:", err);
+      console.error("Error adding note to Supabase:", err);
     }
   };
 
@@ -97,7 +134,10 @@ export default function App() {
       if (requestMethod) {
         requestMethod.call(element).catch((err: any) => {
           console.error(`Error attempting to enable fullscreen: ${err.message}`);
+          alert(`Error de pantalla completa: Tu navegador o entorno actual no permite esta acción (${err.message}). Si estás en una vista previa integrada, intenta abrirlo en una pestaña nueva.`);
         });
+      } else {
+        alert("Tu navegador no soporta el modo pantalla completa.");
       }
     } else {
       const doc = document as any;
@@ -166,31 +206,26 @@ export default function App() {
 
   if (isInitializing) {
     return (
-      <div className="min-h-screen bg-vortex-dark flex flex-col items-center justify-center gap-8">
-        <motion.div
-          animate={{ 
-            scale: [1, 1.05, 1],
-            opacity: [0.5, 1, 0.5]
-          }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="w-24 h-24 flex items-center justify-center"
-        >
-          <InstitutionalLogo className="w-full h-full" />
-        </motion.div>
-        <motion.div
-          animate={{ opacity: [0, 1, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-          className="text-vortex-accent text-3xl font-serif italic tracking-widest text-center"
-        >
-          LOS HÉROES<br/>
-          <span className="text-sm tracking-[0.5em] text-white">DE ÑUBLE</span>
-        </motion.div>
-      </div>
+      <>
+        <div className="absolute top-8 left-8 z-20">
+          <InstitutionalLogo className="w-16 h-16" onClick={toggleFullscreen} />
+        </div>
+        <div className="min-h-screen bg-vortex-dark flex flex-col items-center justify-center gap-8">
+          <motion.div
+            animate={{ opacity: [0, 1, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+            className="text-vortex-accent text-3xl font-serif italic tracking-widest text-center"
+          >
+            LOS HÉROES<br/>
+            <span className="text-sm tracking-[0.5em] text-white">DE ÑUBLE</span>
+          </motion.div>
+        </div>
+      </>
     );
   }
 
   if (!userProfile) {
-    return <LoginGate onLogin={handleLogin} />;
+    return <LoginGate onLogin={handleLogin} onToggleFullscreen={toggleFullscreen} />;
   }
 
   const renderContent = () => {
@@ -205,7 +240,7 @@ export default function App() {
 
     switch (activeTab) {
       case 'hub':
-        return <MainHub onSelectModule={setActiveTab} userName={connectedProfile.name} onToggleFullscreen={toggleFullscreen} isFullscreen={isFullscreen} />;
+        return <MainHub onSelectModule={setActiveTab} userName={connectedProfile.name} onToggleFullscreen={toggleFullscreen} isFullscreen={isFullscreen} onLogout={handleLogout} />;
       case 'dashboard':
         return <Dashboard profile={connectedProfile} updateProfile={updateProfile} />;
       case 'academic':
@@ -248,24 +283,19 @@ export default function App() {
         {/* Isolated Navigation Bar (only when not in HUB) */}
         {activeTab !== 'hub' && (
           <nav className="fixed top-0 left-0 right-0 h-16 bg-vortex-surface/80 backdrop-blur-md border-b border-white/5 z-40 px-6 flex items-center justify-between">
-            <button 
-              onClick={() => setActiveTab('hub')}
-              className="flex items-center gap-2 text-slate-400 hover:text-white transition-all text-[10px] uppercase tracking-widest font-bold group"
-            >
-              <div className="w-8 h-8 rounded bg-slate-900 border border-slate-800 flex items-center justify-center group-hover:border-[#2563eb]/50">
-                <ChevronLeft className="w-4 h-4" />
-              </div>
-              Regresar al Menú Principal
-            </button>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-6">
+              <InstitutionalLogo className="w-10 h-10" onClick={toggleFullscreen} />
               <button 
-                onClick={toggleFullscreen}
-                className="flex items-center gap-2 px-3 py-1.5 rounded border border-vortex-accent/20 hover:border-vortex-accent/50 text-slate-500 hover:text-vortex-accent transition-all text-[9px] uppercase tracking-widest font-bold bg-vortex-accent/5"
+                onClick={() => setActiveTab('hub')}
+                className="flex items-center gap-2 text-slate-400 hover:text-white transition-all text-[10px] uppercase tracking-widest font-bold group"
               >
-                {isFullscreen ? <Minimize className="w-3.5 h-3.5" /> : <Maximize className="w-3.5 h-3.5" />}
-                <span className="hidden sm:inline">{isFullscreen ? 'Esc' : 'Pantalla Completa'}</span>
+                <div className="w-8 h-8 rounded bg-slate-900 border border-slate-800 flex items-center justify-center group-hover:border-[#2563eb]/50">
+                  <ChevronLeft className="w-4 h-4" />
+                </div>
+                <span className="hidden sm:inline">Regresar al Menú Principal</span>
               </button>
-              <div className="hidden md:block h-4 w-px bg-white/10 mx-1" />
+            </div>
+            <div className="flex items-center gap-4">
               <div className="hidden md:flex items-center gap-4">
                 <span className="text-[10px] text-slate-600 font-mono italic">TERMINAL // {activeTab.toUpperCase()}</span>
                 <button onClick={handleLogout} className="text-slate-500 hover:text-vortex-accent transition-colors text-[9px] uppercase tracking-widest font-bold">Cerrar Sesión</button>

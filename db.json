@@ -1,0 +1,33 @@
+{
+  "guides": [
+    {
+      "id": "g1",
+      "title": "Guía de Álgebra I: Ecuaciones",
+      "date": "24/04/2026",
+      "status": "PENDING",
+      "category": "MATEMÁTICAS PAES"
+    },
+    {
+      "id": "g2",
+      "title": "Guía de Comprensión Lectora: Textos Científicos",
+      "date": "22/04/2026",
+      "status": "RESOLVED",
+      "category": "LENGUAJE PAES"
+    },
+    {
+      "id": "g3",
+      "title": "Historia de Chile: La Independencia",
+      "date": "20/04/2026",
+      "status": "READ",
+      "category": "HISTORIA"
+    }
+  ],
+  "notes": [
+    {
+      "id": "n1",
+      "tag": "GENERAL",
+      "text": "Recuerden que la prueba de suficiencia física es el próximo viernes. Traer ropa deportiva.",
+      "date": "22/04/2026"
+    }
+  ]
+}

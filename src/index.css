@@ -50,3 +50,66 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #334155;
 }
+
+/* Custom Col Scroll from user */
+.col-scroll {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100%;
+  gap: 2vw;
+  background-color: var(--color-vortex-dark);
+}
+
+.col-scroll__box {
+  display: flex;
+  flex-direction: column;
+  padding: 5vh 0 15vh;
+}
+
+.col-scroll__box:nth-child(odd) {
+  flex-direction: column-reverse;
+  height: 100vh;
+}
+
+.col-scroll__list {
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+}
+
+.col-scroll__box:nth-child(odd) .col-scroll__list {
+  flex-direction: column-reverse;
+}
+
+.col-scroll__item {
+  margin: 0;
+  padding: 1vw 0;
+}
+
+.col-scroll__img {
+  aspect-ratio: 6/7;
+  height: auto;
+  object-fit: cover;
+  width: 25vw;
+  border-radius: 8px;
+  /* Imagenes a color original como lo pidio el usuario */
+  transition: all 0.5s ease;
+}
+
+.col-scroll__img:hover {
+  transform: scale(1.02);
+}
+
+.col-scroll__title {
+  margin: 12px 0 16px;
+  color: #64748b;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-family: var(--font-mono);
+  font-style: italic;
+  text-align: center;
+  opacity: 0.5;
+}

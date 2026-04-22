@@ -35,18 +35,24 @@ interface MainHubProps {
   userName: string;
   onToggleFullscreen: () => void;
   isFullscreen: boolean;
+  onLogout: () => void;
 }
 
-export default function MainHub({ onSelectModule, userName, onToggleFullscreen, isFullscreen }: MainHubProps) {
+export default function MainHub({ onSelectModule, userName, onToggleFullscreen, isFullscreen, onLogout }: MainHubProps) {
   return (
     <div className="min-h-screen bg-vortex-dark p-6 md:p-12 animate-in fade-in duration-700">
-      <header className="max-w-7xl mx-auto mb-16 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+      <div className="absolute top-8 left-8 z-20">
+        <InstitutionalLogo className="w-14 h-14" onClick={onToggleFullscreen} />
+      </div>
+
+      <header className="max-w-7xl mx-auto mb-16 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 pt-20 md:pt-0">
         <div>
           <div className="flex items-center gap-4 mb-4">
-            <div className="w-16 h-16 flex items-center justify-center p-1">
-              <InstitutionalLogo className="w-full h-full" />
-            </div>
-            <div className="flex flex-col">
+            <div 
+              className="flex flex-col cursor-pointer hover:scale-105 active:scale-95 transition-transform"
+              onClick={onLogout}
+              title="Cerrar sesión"
+            >
               <span className="font-serif italic text-lg tracking-tight leading-none text-white font-bold">LOS HÉROES</span>
               <span className="font-serif italic text-xs tracking-[0.3em] text-vortex-accent">DE ÑUBLE</span>
             </div>
@@ -56,23 +62,6 @@ export default function MainHub({ onSelectModule, userName, onToggleFullscreen, 
             Bienvenido, <span className="text-vortex-accent">{userName}</span> // Acceso Autorizado
           </p>
         </div>
-        
-        <button 
-          onClick={onToggleFullscreen}
-          className="flex items-center gap-3 px-6 py-3 bg-vortex-surface/50 border border-vortex-accent/30 hover:border-vortex-accent rounded-lg text-[10px] uppercase tracking-[0.2em] text-vortex-accent font-bold transition-all hover:bg-vortex-accent/5 active:scale-95 group shadow-[0_0_15px_rgba(204,0,0,0.1)]"
-        >
-          {isFullscreen ? (
-            <>
-              <Minimize className="w-5 h-5" />
-              <span>Salir de Pantalla Completa</span>
-            </>
-          ) : (
-            <>
-              <Maximize className="w-5 h-5 group-hover:scale-110 transition-transform" />
-              <span>Modo Pantalla Completa</span>
-            </>
-          )}
-        </button>
       </header>
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
