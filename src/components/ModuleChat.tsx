@@ -67,30 +67,21 @@ export default function ModuleChat({ currentUser }: ModuleChatProps) {
     );
   }, [selectedContact, currentUser.code]);
 
-  // Load messages from Supabase when contact changes
+  // Load messages when contact changes and set up polling
   useEffect(() => {
     if (!selectedContact) return;
     setLoadingMsgs(true);
     loadMessages();
 
-    const channel = supabase
-      .channel(`chat_realtime_${currentUser.code}`)
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'chat_messages' }, (payload) => {
-        const incoming = payload.new as Message;
-        if (!isRelevantMessage(incoming)) return;
-        setMessages(prev => {
-          if (prev.some(m => m.id === incoming.id)) return prev;
-          return [...prev, incoming].sort(
-            (a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
-          );
-        });
-      })
-      .subscribe();
+    // Polling cada 2 segundos para nuevos mensajes
+    const interval = setInterval(() => {
+      loadMessages();
+    }, 2000);
 
     return () => {
-      supabase.removeChannel(channel);
+      clearInterval(interval);
     };
-  }, [selectedContact, currentUser.code, isRelevantMessage]);
+  }, [selectedContact, currentUser.code]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -100,20 +91,22 @@ export default function ModuleChat({ currentUser }: ModuleChatProps) {
     try {
       setChatError(null);
 
-      let query = supabase.from('chat_messages').select('*').order('created_at', { ascending: true });
-
+      let url = '/api/chat-messages?';
+      
       if (selectedContact === 'group') {
-        query = query.is('to_code', null);
+        url += 'group=true';
       } else if (selectedContact) {
         const contactCode = (selectedContact as UserProfile).code;
-        query = query.or(
-          `and(from_code.eq.${currentUser.code},to_code.eq.${contactCode}),and(from_code.eq.${contactCode},to_code.eq.${currentUser.code})`
-        );
+        url += `from_code=${currentUser.code}&with_code=${contactCode}`;
       }
 
-      const { data, error } = await query.limit(500);
-      if (error) throw error;
-      setMessages((data as Message[]) ?? []);
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      setMessages(data || []);
     } catch (err) {
       console.error('Error loading messages:', err);
       setChatError('Error al cargar mensajes. Verifica tu conexión.');
@@ -145,25 +138,35 @@ export default function ModuleChat({ currentUser }: ModuleChatProps) {
       }
 
       const toCode = selectedContact === 'group' ? null : (selectedContact as UserProfile)?.code ?? null;
-      const { data, error } = await supabase.from('chat_messages').insert([{
-        from_code: currentUser.code,
-        from_name: currentUser.name,
-        to_code: toCode,
-        text: text.trim() || null,
-        image_url,
-      }]).select().single();
+      
+      // Usar la API del servidor en lugar de Supabase directamente
+      const response = await fetch('/api/chat-messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          from_code: currentUser.code,
+          from_name: currentUser.name,
+          to_code: toCode,
+          text: text.trim() || null,
+          image_url,
+        }),
+      });
 
-      if (error) throw error;
-
-      if (data) {
-        const inserted = data as Message;
-        setMessages(prev => {
-          if (prev.some(m => m.id === inserted.id)) return prev;
-          return [...prev, inserted].sort(
-            (a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
-          );
-        });
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
       }
+
+      const data = await response.json();
+      
+      // Agregar el mensaje a la lista local
+      setMessages(prev => {
+        if (prev.some(m => m.id === data.id)) return prev;
+        return [...prev, data].sort(
+          (a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+        );
+      });
 
       setText('');
       setImageFile(null);

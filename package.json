@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "tsx server-supabase.ts",
     "build": "vite build",
+    "start": "tsx server-supabase.ts",
     "preview": "vite preview",
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit",

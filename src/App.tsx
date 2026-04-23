@@ -4,7 +4,7 @@ import Dashboard from './components/Dashboard';
 import ModuleAcademic from './components/ModuleAcademic';
 import ModulePhysical from './components/ModulePhysical';
 import ModuleSchedule from './components/ModuleSchedule';
-import ModuleChat from './components/ModuleChat';
+import ModuleChatSimple from './components/ModuleChatSimple';
 import ModuleMusic from './components/ModuleMusic';
 import ModuleMemories from './components/ModuleMemories';
 import MainHub from './components/MainHub';
@@ -303,7 +303,7 @@ export default function App() {
       case 'schedule':
         return <ModuleSchedule />;
       case 'chat':
-        return <ModuleChat currentUser={connectedProfile} />;
+        return <ModuleChatSimple currentUser={connectedProfile} />;
       case 'music':
         return (
           <ModuleMusic
