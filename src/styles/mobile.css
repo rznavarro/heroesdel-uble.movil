@@ -1,0 +1,203 @@
+/* Estilos específicos para dispositivos móviles */
+
+/* Safe Areas para iOS */
+@supports (padding: max(0px)) {
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  .safe-left {
+    padding-left: env(safe-area-inset-left);
+  }
+  
+  .safe-right {
+    padding-right: env(safe-area-inset-right);
+  }
+  
+  .safe-all {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* Clases de utilidad para Tailwind */
+.h-safe-top {
+  height: env(safe-area-inset-top);
+}
+
+.h-safe-bottom {
+  height: env(safe-area-inset-bottom);
+}
+
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+
+/* Optimizaciones táctiles */
+.touch-manipulation {
+  touch-action: manipulation;
+}
+
+.no-tap-highlight {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Scroll suave en móviles */
+.smooth-scroll {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* Prevenir zoom en inputs */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea {
+  font-size: 16px; /* Previene zoom en iOS */
+}
+
+/* Estilos para gestos de swipe */
+.swipeable {
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Animaciones optimizadas para móvil */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Mejoras de performance */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Estilos para notch de iPhone */
+@supports (padding: max(0px)) {
+  .notch-safe {
+    padding-left: max(12px, env(safe-area-inset-left));
+    padding-right: max(12px, env(safe-area-inset-right));
+  }
+}
+
+/* Ocultar scrollbars en móvil cuando sea necesario */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Estilos para modal sheets móviles */
+.modal-sheet {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+/* Indicador de arrastre para modals */
+.drag-indicator {
+  width: 36px;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+  margin: 8px auto;
+}
+
+/* Estilos para botones táctiles */
+.touch-button {
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Feedback visual para toques */
+.touch-feedback {
+  position: relative;
+  overflow: hidden;
+}
+
+.touch-feedback::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s;
+}
+
+.touch-feedback:active::after {
+  width: 200px;
+  height: 200px;
+}
+
+/* Estilos para pull-to-refresh */
+.pull-to-refresh {
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+}
+
+.pull-to-refresh.pulling {
+  transform: translateY(60px);
+}
+
+/* Optimizaciones para listas largas */
+.virtual-list-item {
+  contain: layout style paint;
+}
+
+/* Estilos para teclado virtual */
+.keyboard-open {
+  height: calc(100vh - env(keyboard-inset-height, 0px));
+}
+
+/* Mejoras de accesibilidad móvil */
+@media (prefers-color-scheme: dark) {
+  .auto-dark {
+    color-scheme: dark;
+  }
+}
+
+/* Estilos para orientación landscape */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+  .landscape-compact {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  
+  .landscape-hide {
+    display: none;
+  }
+}
+
+/* Estilos para dispositivos con notch */
+@supports (padding: max(0px)) {
+  .notch-padding {
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+  }
+}

@@ -1,7 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
+import { useDeviceDetection } from './hooks/useDeviceDetection';
+import MobileLayout from './components/mobile/MobileLayout';
 import LoginGate from './components/LoginGate';
 import Dashboard from './components/Dashboard';
 import ModuleAcademic from './components/ModuleAcademic';
+import ModuleHistory from './components/ModuleHistory';
 import ModulePhysical from './components/ModulePhysical';
 import ModuleSchedule from './components/ModuleSchedule';
 import ModuleChatSimple from './components/ModuleChatSimple';
@@ -16,12 +19,12 @@ import { ChevronLeft } from 'lucide-react';
 import { supabase } from './lib/supabase';
 
 const MUSIC_PLAYLIST = [
-  { title: 'The Weeknd - What You Need', src: '/audio/the-weeknd-what-you-need.mp3' },
-  { title: 'Survivor - Eye Of The Tiger Lyrics', src: '/audio/survivor-eye-of-the-tiger.mp3' },
-  { title: 'Linkin Park - What Ive Done Lyrics', src: '/audio/linkin-park-what-ive-done.mp3' },
+  // Test - Solo esta canción para probar
+  { title: 'Red Hot Chili Peppers - Can\'t Stop', src: '/downloads/Red Hot Chili Peppers - Can\'t Stop [Official Music Video].mp3', category: 'Test' },
 ];
 
 export default function App() {
+  const { isMobile, isTablet } = useDeviceDetection();
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [activeTab, setActiveTab] = useState('hub');
   const [isInitializing, setIsInitializing] = useState(true);
@@ -82,6 +85,8 @@ export default function App() {
     audio.volume = 1;
     audio.src = MUSIC_PLAYLIST[currentSongIndex].src;
     audio.load();
+    
+    // Si estaba reproduciendo música, continuar con la nueva canción
     if (isMusicPlaying) {
       audio.play().catch((err) => console.error('Error reproduciendo audio:', err));
     }
@@ -98,6 +103,12 @@ export default function App() {
         .then(() => setIsMusicPlaying(true))
         .catch((err) => console.error('Error reproduciendo audio:', err));
     }
+  };
+
+  const selectSong = (index: number) => {
+    setCurrentSongIndex(index);
+    // Reproducir automáticamente la canción seleccionada
+    setIsMusicPlaying(true);
   };
 
   const addGlobalGuide = async (guide: any) => {
@@ -276,132 +287,174 @@ export default function App() {
 
     if (!connectedProfile) return null;
 
-    switch (activeTab) {
-      case 'hub':
-        return <MainHub onSelectModule={setActiveTab} userName={connectedProfile.name} onToggleFullscreen={toggleFullscreen} isFullscreen={isFullscreen} onLogout={handleLogout} />;
-      case 'dashboard':
-        return <Dashboard profile={connectedProfile} updateProfile={updateProfile} />;
-      case 'academic':
-      case 'history':
-      case 'languages':
-      case 'paes-math':
-      case 'paes-lang':
-      case 'psychology':
-      case 'doctrine':
-      case 'admin':
-        return (
-          <ModuleAcademic 
-            profile={connectedProfile} 
-            updateProfile={updateProfile} 
-            activeTab={activeTab} 
-            onAddGlobalGuide={addGlobalGuide}
-            onAddGlobalNote={addGlobalNote}
-          />
-        );
-      case 'physical':
-        return <ModulePhysical profile={connectedProfile} updateProfile={updateProfile} />;
-      case 'schedule':
-        return <ModuleSchedule />;
-      case 'chat':
-        return <ModuleChatSimple currentUser={connectedProfile} />;
-      case 'music':
-        return (
-          <ModuleMusic
-            isPlaying={isMusicPlaying}
-            songs={MUSIC_PLAYLIST}
-            currentSongIndex={currentSongIndex}
-            onTogglePlayback={toggleMusicPlayback}
-            onSelectSong={setCurrentSongIndex}
-          />
-        );
-      case 'memories':
-        return <ModuleMemories />;
-      default:
-        return (
-          <div className="flex flex-col items-center justify-center h-[calc(100vh-12rem)] text-slate-700 py-20 border border-slate-800 rounded opacity-50">
-            <div className="w-16 h-16 bg-slate-900 border border-slate-800 rounded flex items-center justify-center mb-6 text-2xl font-serif italic">?</div>
-            <h3 className="text-xl font-serif italic mb-2 tracking-widest text-slate-500">Terminal Restringida</h3>
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em]">Enlace encriptado o módulo en desarrollo</p>
-          </div>
-        );
+    const content = (() => {
+      switch (activeTab) {
+        case 'hub':
+          return <MainHub onSelectModule={setActiveTab} userName={connectedProfile.name} onToggleFullscreen={toggleFullscreen} isFullscreen={isFullscreen} onLogout={handleLogout} />;
+        case 'dashboard':
+          return <Dashboard profile={connectedProfile} updateProfile={updateProfile} />;
+        case 'history':
+          return <ModuleHistory />;
+        case 'academic':
+        case 'languages':
+        case 'paes-math':
+        case 'paes-lang':
+        case 'psychology':
+        case 'doctrine':
+        case 'admin':
+          return (
+            <ModuleAcademic 
+              profile={connectedProfile} 
+              updateProfile={updateProfile} 
+              activeTab={activeTab} 
+              onAddGlobalGuide={addGlobalGuide}
+              onAddGlobalNote={addGlobalNote}
+            />
+          );
+        case 'physical':
+          return <ModulePhysical profile={connectedProfile} updateProfile={updateProfile} />;
+        case 'schedule':
+          return <ModuleSchedule />;
+        case 'chat':
+          return <ModuleChatSimple currentUser={connectedProfile} />;
+        case 'music':
+          return (
+            <ModuleMusic
+              isPlaying={isMusicPlaying}
+              songs={MUSIC_PLAYLIST}
+              currentSongIndex={currentSongIndex}
+              onTogglePlayback={toggleMusicPlayback}
+              onSelectSong={selectSong}
+            />
+          );
+        case 'memories':
+          return <ModuleMemories />;
+        default:
+          return (
+            <div className="flex flex-col items-center justify-center h-[calc(100vh-12rem)] text-slate-700 py-20 border border-slate-800 rounded opacity-50">
+              <div className="w-16 h-16 bg-slate-900 border border-slate-800 rounded flex items-center justify-center mb-6 text-2xl font-serif italic">?</div>
+              <h3 className="text-xl font-serif italic mb-2 tracking-widest text-slate-500">Terminal Restringida</h3>
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em]">Enlace encriptado o módulo en desarrollo</p>
+            </div>
+          );
+      }
+    })();
+
+    // Envolver en MobileLayout si es dispositivo móvil
+    if (isMobile) {
+      return (
+        <MobileLayout 
+          showHeader={activeTab !== 'hub'}
+          showBottomNav={true}
+          headerTitle={getPageTitle()}
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+        >
+          {content}
+        </MobileLayout>
+      );
     }
+
+    return content;
+  };
+
+  const getPageTitle = () => {
+    const titles: Record<string, string> = {
+      'hub': 'Inicio',
+      'dashboard': 'Dashboard',
+      'academic': 'Académico',
+      'history': 'Historia',
+      'languages': 'Idiomas',
+      'paes-math': 'Matemáticas PAES',
+      'paes-lang': 'Lenguaje PAES',
+      'psychology': 'Psicología',
+      'doctrine': 'Doctrina',
+      'admin': 'Administración',
+      'physical': 'Preparación Física',
+      'schedule': 'Horarios',
+      'chat': 'Chat',
+      'music': 'Música',
+      'memories': 'Recuerdos'
+    };
+    return titles[activeTab] || 'Los Héroes de Ñuble';
   };
 
   return (
     <div className="min-h-screen bg-vortex-dark">
-      <audio ref={audioRef} preload="metadata" onPlay={() => setIsMusicPlaying(true)} onPause={() => setIsMusicPlaying(false)} />
-      {/* Sidebar is now conditional or hidden in isolated mode */}
-      {/* For this specific request, we won't show the sidebar at all if we are in a module, 
-          instead we show a "Back to Menu" button to keep it isolated. */}
+      <audio 
+        ref={audioRef} 
+        preload="metadata" 
+        onPlay={() => setIsMusicPlaying(true)} 
+        onPause={() => setIsMusicPlaying(false)}
+        style={{ display: 'none' }}
+      />
       
-      <main className={`min-h-screen ${activeTab === 'hub' ? '' : 'p-6 md:p-12'} relative flex flex-col scroll-smooth`}>
-        {/* Isolated Navigation Bar (only when not in HUB) */}
-        {activeTab !== 'hub' && (
-          <nav className="fixed top-0 left-0 right-0 h-16 bg-vortex-surface/80 backdrop-blur-md border-b border-white/5 z-40 px-6 flex items-center justify-between">
-            <div className="flex items-center gap-6">
-              <InstitutionalLogo className="w-10 h-10" onClick={toggleFullscreen} />
-              <button 
-                onClick={() => setActiveTab('hub')}
-                className="flex items-center gap-2 text-slate-400 hover:text-white transition-all text-[10px] uppercase tracking-widest font-bold group"
-              >
-                <div className="w-8 h-8 rounded bg-slate-900 border border-slate-800 flex items-center justify-center group-hover:border-[#2563eb]/50">
-                  <ChevronLeft className="w-4 h-4" />
-                </div>
-                <span className="hidden sm:inline">Regresar al Menú Principal</span>
-              </button>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="hidden md:flex items-center gap-4">
-                <span className="text-[10px] text-slate-600 font-mono italic">TERMINAL // {activeTab.toUpperCase()}</span>
-                <button onClick={handleLogout} className="text-slate-500 hover:text-vortex-accent transition-colors text-[9px] uppercase tracking-widest font-bold">Cerrar Sesión</button>
+      {/* Sidebar y navegación desktop (solo si no es móvil) */}
+      {!isMobile && activeTab !== 'hub' && (
+        <nav className="fixed top-0 left-0 right-0 h-16 bg-vortex-surface/80 backdrop-blur-md border-b border-white/5 z-40 px-6 flex items-center justify-between">
+          <div className="flex items-center gap-6">
+            <InstitutionalLogo className="w-10 h-10" onClick={toggleFullscreen} />
+            <button 
+              onClick={() => setActiveTab('hub')}
+              className="flex items-center gap-2 text-slate-400 hover:text-white transition-all text-[10px] uppercase tracking-widest font-bold group"
+            >
+              <div className="w-8 h-8 rounded bg-slate-900 border border-slate-800 flex items-center justify-center group-hover:border-[#2563eb]/50">
+                <ChevronLeft className="w-4 h-4" />
               </div>
+              <span className="hidden sm:inline">Regresar al Menú Principal</span>
+            </button>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="hidden md:flex items-center gap-4">
+              <span className="text-[10px] text-slate-600 font-mono italic">TERMINAL // {activeTab.toUpperCase()}</span>
+              <button onClick={handleLogout} className="text-slate-500 hover:text-vortex-accent transition-colors text-[9px] uppercase tracking-widest font-bold">Cerrar Sesión</button>
             </div>
-          </nav>
-        )}
+          </div>
+        </nav>
+      )}
 
-        {/* Background Atmosphere */}
-        <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-vortex-accent/5 rounded-full blur-[150px] -z-10 select-none pointer-events-none" />
-        
-        {/* Loading Indicator for "Page Changes" */}
+      {/* Background Atmosphere */}
+      <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-vortex-accent/5 rounded-full blur-[150px] -z-10 select-none pointer-events-none" />
+      
+      {/* Loading Indicator for "Page Changes" */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={`loader-${activeTab}`}
+          initial={{ width: "0%" }}
+          animate={{ width: "100%" }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.6, ease: "easeInOut" }}
+          className={`fixed top-0 left-0 right-0 h-0.5 bg-vortex-accent z-50 pointer-events-none origin-left`}
+        />
+      </AnimatePresence>
+
+      <div className={`flex-1 ${!isMobile && activeTab !== 'hub' ? 'pt-16' : ''}`}>
         <AnimatePresence mode="wait">
           <motion.div
-            key={`loader-${activeTab}`}
-            initial={{ width: "0%" }}
-            animate={{ width: "100%" }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.6, ease: "easeInOut" }}
-            className={`fixed top-0 left-0 right-0 h-0.5 bg-vortex-accent z-50 pointer-events-none origin-left`}
-          />
+            key={activeTab}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+            className={activeTab === 'hub' ? 'w-full' : !isMobile ? 'max-w-7xl mx-auto p-6 md:p-12' : 'w-full'}
+          >
+            {renderContent()}
+          </motion.div>
         </AnimatePresence>
+      </div>
 
-        <div className={`flex-1 ${activeTab !== 'hub' ? 'pt-16' : ''}`}>
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-              className={activeTab === 'hub' ? 'w-full' : 'max-w-7xl mx-auto'}
-            >
-              {renderContent()}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {activeTab !== 'hub' && (
-          <footer className="mt-auto py-8 border-t border-slate-800/50 flex flex-col md:flex-row justify-between gap-4 text-[9px] text-slate-600 uppercase tracking-[0.3em] font-bold">
-            <div className="flex gap-4 items-center">
-              <span className="w-1.5 h-1.5 bg-[#2563eb] rounded-full opacity-50"></span>
-              <p>© 2026 PREUNIVERSITARIO LOS HÉROES DE ÑUBLE // V2.0.0</p>
-            </div>
-            <div className="flex gap-8">
-              <p>Destino: {userProfile.targetInstitution}</p>
-              <p>ID Sesión: {userProfile.code}</p>
-            </div>
-          </footer>
-        )}
-      </main>
+      {!isMobile && activeTab !== 'hub' && (
+        <footer className="mt-auto py-8 border-t border-slate-800/50 flex flex-col md:flex-row justify-between gap-4 text-[9px] text-slate-600 uppercase tracking-[0.3em] font-bold px-6 md:px-12">
+          <div className="flex gap-4 items-center">
+            <span className="w-1.5 h-1.5 bg-[#2563eb] rounded-full opacity-50"></span>
+            <p>© 2026 PREUNIVERSITARIO LOS HÉROES DE ÑUBLE // V2.0.0</p>
+          </div>
+          <div className="flex gap-8">
+            <p>Destino: {userProfile?.targetInstitution}</p>
+            <p>ID Sesión: {userProfile?.code}</p>
+          </div>
+        </footer>
+      )}
     </div>
   );
 }

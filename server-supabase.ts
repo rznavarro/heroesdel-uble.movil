@@ -2,6 +2,8 @@ import express from "express";
 import { createServer as createViteServer } from "vite";
 import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
+import path from "path";
+import path from "path";
 
 dotenv.config();
 
@@ -15,6 +17,9 @@ async function startServer() {
   const PORT = 3000;
 
   app.use(express.json());
+
+  // Serve static files from Downloads folder
+  app.use('/downloads', express.static('C:/Users/ASUS/Downloads'));
 
   // API Routes
   app.get("/api/data", async (req, res) => {

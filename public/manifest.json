@@ -1,0 +1,80 @@
+{
+  "name": "Los Héroes de Ñuble - Sistema Educativo",
+  "short_name": "Héroes Ñuble",
+  "description": "Sistema educativo preuniversitario para preparación académica y personal",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#dc2626",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "es-CL",
+  "categories": ["education", "productivity"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png", 
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/screenshot-desktop.png", 
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Chat Educativo",
+      "short_name": "Chat",
+      "description": "Acceso directo al chat con IA educativa",
+      "url": "/?tab=chat",
+      "icons": [
+        {
+          "src": "/icon-chat.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Módulos Académicos",
+      "short_name": "Académico", 
+      "description": "Acceso a contenido educativo",
+      "url": "/?tab=academic",
+      "icons": [
+        {
+          "src": "/icon-academic.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "edge_side_panel": {
+    "preferred_width": 400
+  },
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  }
+}
