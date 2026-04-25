@@ -26,16 +26,28 @@ export default function LogoFullscreen({
       whileTap={{ scale: 0.98 }}
       className={`
         relative ${sizeClasses[size]} cursor-pointer
-        transition-all duration-200
+        transition-all duration-200 
+        border-0 outline-none focus:outline-none
+        bg-transparent p-0 m-0
         ${className}
       `}
+      style={{ 
+        border: 'none', 
+        outline: 'none',
+        boxShadow: 'none'
+      }}
       title=""
     >
-      {/* Logo Image - completamente natural */}
+      {/* Logo Image - sin bordes ni marcos */}
       <img 
         src="/logo.png" 
         alt="Preuniversitario Los Héroes de Ñuble"
-        className="w-full h-full object-contain"
+        className="w-full h-full object-contain border-0 outline-none"
+        style={{ 
+          border: 'none', 
+          outline: 'none',
+          boxShadow: 'none'
+        }}
       />
     </motion.button>
   );
