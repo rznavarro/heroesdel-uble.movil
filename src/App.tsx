@@ -296,7 +296,6 @@ export default function App() {
         case 'paes-lang':
         case 'psychology':
         case 'doctrine':
-        case 'admin':
           return (
             <ModuleAcademic 
               profile={connectedProfile} 
@@ -366,7 +365,6 @@ export default function App() {
       'paes-lang': 'Lenguaje PAES',
       'psychology': 'Psicología',
       'doctrine': 'Doctrina',
-      'admin': 'Administración',
       'physical': 'Preparación Física',
       'schedule': 'Horarios',
       'chat': 'Chat',

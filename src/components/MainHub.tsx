@@ -26,7 +26,6 @@ export const MODULES = [
   { id: 'psychology', label: 'Psicología', icon: BrainCircuit, desc: 'Tests psicométricos y perfil personal' },
   { id: 'history', label: 'Historia Naval', icon: History, desc: 'Cultura institucional y tradiciones' },
   { id: 'doctrine', label: 'Vida Castrense', icon: Shield, desc: 'Reglamento y doctrina operativa' },
-  { id: 'admin', label: 'Gestión', icon: FileText, desc: 'Control de admisión y trámites' },
   { id: 'languages', label: 'Inglés', icon: Languages, desc: 'Competencia lingüística institucional' },
 ];
 
