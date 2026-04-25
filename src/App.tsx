@@ -9,7 +9,7 @@ import ModulePhysical from './components/ModulePhysical';
 import ModuleSchedule from './components/ModuleSchedule';
 import ModuleChatSimple from './components/ModuleChatSimple';
 import ModuleMusic from './components/ModuleMusic';
-import ModuleMemories from './components/ModuleMemories';
+import ModuleMemoriesGallery from './components/ModuleMemoriesGallery';
 import MainHub from './components/MainHub';
 import LogoFullscreen from './components/LogoFullscreen';
 import { motion, AnimatePresence } from 'motion/react';
@@ -322,7 +322,7 @@ export default function App() {
             />
           );
         case 'memories':
-          return <ModuleMemories />;
+          return <ModuleMemoriesGallery />;
         default:
           return (
             <div className="flex flex-col items-center justify-center h-[calc(100vh-12rem)] text-slate-700 py-20 border border-slate-800 rounded opacity-50">
