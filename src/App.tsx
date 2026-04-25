@@ -290,7 +290,6 @@ export default function App() {
           return <Dashboard profile={connectedProfile} updateProfile={updateProfile} />;
         case 'history':
           return <ModuleHistory />;
-        case 'academic':
         case 'languages':
         case 'paes-math':
         case 'paes-lang':
@@ -358,7 +357,6 @@ export default function App() {
     const titles: Record<string, string> = {
       'hub': 'Inicio',
       'dashboard': 'Dashboard',
-      'academic': 'Académico',
       'history': 'Historia',
       'languages': 'Idiomas',
       'paes-math': 'Matemáticas PAES',

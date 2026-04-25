@@ -19,8 +19,8 @@ import LogoFullscreen from './LogoFullscreen';
 
 export const MODULES = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, desc: 'Vista general de rendimiento y estadísticas' },
+  { id: 'memories', label: 'Recuerdos', icon: Camera, desc: 'Galería fotográfica del preuniversitario' },
   { id: 'physical', label: 'Ed. Física', icon: Dumbbell, desc: 'Control de tiempos y marcas físicas' },
-  { id: 'academic', label: 'Académico Gen.', icon: GraduationCap, desc: 'Bóveda de guías y apuntes generales' },
   { id: 'paes-math', label: 'Matemáticas PAES', icon: Target, desc: 'Entrenamiento específico de razonamiento matemático' },
   { id: 'paes-lang', label: 'Lenguaje PAES', icon: FileText, desc: 'Comprensión lectora y vocabulario' },
   { id: 'psychology', label: 'Psicología', icon: BrainCircuit, desc: 'Tests psicométricos y perfil personal' },
@@ -33,7 +33,6 @@ const TOP_NAV = [
   { id: 'schedule', label: 'Horario', icon: Calendar },
   { id: 'chat', label: 'Chat', icon: MessageCircle },
   { id: 'music', label: 'Música', icon: Music2 },
-  { id: 'memories', label: 'Recuerdos', icon: Camera },
 ];
 
 interface MainHubProps {
