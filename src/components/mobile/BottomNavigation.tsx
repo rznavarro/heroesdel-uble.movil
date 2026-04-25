@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Home, BookOpen, MessageCircle, Music, User } from 'lucide-react';
+import { Home, BookOpen, MessageCircle, Music, Mic } from 'lucide-react';
 
 interface NavItem {
   id: string;
@@ -42,10 +42,10 @@ const NAV_ITEMS: NavItem[] = [
     path: '/music'
   },
   {
-    id: 'profile',
-    label: 'Perfil',
-    icon: User,
-    path: '/profile'
+    id: 'voice-agent',
+    label: 'Agente IA',
+    icon: Mic,
+    path: '/voice-agent'
   }
 ];
 

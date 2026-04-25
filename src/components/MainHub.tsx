@@ -15,6 +15,7 @@ import {
   MessageCircle,
   Music2,
   Camera,
+  Mic,
 } from 'lucide-react';
 
 export const MODULES = [
@@ -34,6 +35,7 @@ const TOP_NAV = [
   { id: 'schedule', label: 'Horario', icon: Calendar },
   { id: 'chat', label: 'Chat', icon: MessageCircle },
   { id: 'music', label: 'Música', icon: Music2 },
+  { id: 'voice-agent', label: 'Agente IA', icon: Mic },
   { id: 'memories', label: 'Recuerdos', icon: Camera },
 ];
 
