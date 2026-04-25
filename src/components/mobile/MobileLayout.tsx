@@ -11,6 +11,8 @@ interface MobileLayoutProps {
   headerActions?: React.ReactNode;
   activeTab?: string;
   onTabChange?: (tabId: string) => void;
+  onToggleFullscreen?: () => void;
+  isFullscreen?: boolean;
 }
 
 export default function MobileLayout({ 
@@ -20,7 +22,9 @@ export default function MobileLayout({
   headerTitle,
   headerActions,
   activeTab,
-  onTabChange
+  onTabChange,
+  onToggleFullscreen,
+  isFullscreen = false
 }: MobileLayoutProps) {
   const { isMobile } = useDeviceDetection();
   
@@ -36,6 +40,8 @@ export default function MobileLayout({
         <MobileHeader 
           title={headerTitle}
           actions={headerActions}
+          onToggleFullscreen={onToggleFullscreen}
+          isFullscreen={isFullscreen}
         />
       )}
       

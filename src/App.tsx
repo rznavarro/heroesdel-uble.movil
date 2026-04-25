@@ -11,6 +11,7 @@ import ModuleChatSimple from './components/ModuleChatSimple';
 import ModuleMusic from './components/ModuleMusic';
 import ModuleMemories from './components/ModuleMemories';
 import MainHub from './components/MainHub';
+import LogoFullscreen from './components/LogoFullscreen';
 import { motion, AnimatePresence } from 'motion/react';
 import { VORTEX_PROFILES } from './data/profiles';
 import { UserProfile } from './types';
@@ -343,6 +344,8 @@ export default function App() {
           headerTitle={getPageTitle()}
           activeTab={activeTab}
           onTabChange={setActiveTab}
+          onToggleFullscreen={toggleFullscreen}
+          isFullscreen={isFullscreen}
         >
           {content}
         </MobileLayout>
@@ -398,6 +401,12 @@ export default function App() {
             </button>
           </div>
           <div className="flex items-center gap-4">
+            {/* Logo en la navegación superior */}
+            <LogoFullscreen 
+              onToggleFullscreen={toggleFullscreen}
+              isFullscreen={isFullscreen}
+              size="sm"
+            />
             <div className="hidden md:flex items-center gap-4">
               <span className="text-[10px] text-slate-600 font-mono italic">TERMINAL // {activeTab.toUpperCase()}</span>
               <button onClick={handleLogout} className="text-slate-500 hover:text-vortex-accent transition-colors text-[9px] uppercase tracking-widest font-bold">Cerrar Sesión</button>

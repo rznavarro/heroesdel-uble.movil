@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { ChevronLeft, Menu, Search, MoreVertical } from 'lucide-react';
+import LogoFullscreen from '../LogoFullscreen';
 
 interface MobileHeaderProps {
   title?: string;
@@ -9,6 +10,8 @@ interface MobileHeaderProps {
   actions?: React.ReactNode;
   searchable?: boolean;
   onSearch?: (query: string) => void;
+  onToggleFullscreen?: () => void;
+  isFullscreen?: boolean;
 }
 
 export default function MobileHeader({ 
@@ -17,7 +20,9 @@ export default function MobileHeader({
   onBack,
   actions,
   searchable = false,
-  onSearch
+  onSearch,
+  onToggleFullscreen,
+  isFullscreen = false
 }: MobileHeaderProps) {
   
   const handleBack = () => {
@@ -68,6 +73,15 @@ export default function MobileHeader({
         
         {/* Lado derecho */}
         <div className="flex items-center gap-2">
+          {/* Logo con funcionalidad de pantalla completa */}
+          {onToggleFullscreen && (
+            <LogoFullscreen 
+              onToggleFullscreen={onToggleFullscreen}
+              isFullscreen={isFullscreen}
+              size="sm"
+            />
+          )}
+          
           {searchable && (
             <motion.button
               whileTap={{ scale: 0.9 }}

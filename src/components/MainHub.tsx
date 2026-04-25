@@ -15,6 +15,7 @@ import {
   Music2,
   Camera,
 } from 'lucide-react';
+import LogoFullscreen from './LogoFullscreen';
 
 export const MODULES = [
   { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard, desc: 'Vista general de rendimiento y estadísticas' },
@@ -53,6 +54,14 @@ export default function MainHub({ onSelectModule, userName, onToggleFullscreen, 
         <div>
           {/* Brand */}
           <div className="flex items-center gap-4 mb-5">
+            {/* Logo con funcionalidad de pantalla completa */}
+            <LogoFullscreen 
+              onToggleFullscreen={onToggleFullscreen}
+              isFullscreen={isFullscreen}
+              size="lg"
+              className="mr-2"
+            />
+            
             <div
               className="flex flex-col cursor-pointer hover:scale-105 active:scale-95 transition-transform"
               onClick={onLogout}
