@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
-import InstitutionalLogo from './InstitutionalLogo';
 import { Loader2 } from 'lucide-react';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
@@ -158,8 +157,11 @@ export default function LoginGate({ onLogin, onToggleFullscreen }: LoginGateProp
       {/* FIXED LOGIN OVERLAY */}
       <div className="fixed inset-0 z-50 pointer-events-none flex items-center justify-center p-6">
         
+        {/* Header con título */}
         <div className="absolute top-8 left-8 z-50 pointer-events-auto">
-          <InstitutionalLogo className="w-20 h-20" onClick={onToggleFullscreen} />
+          <div className="text-white text-lg font-serif italic">
+            Los Héroes de Ñuble
+          </div>
         </div>
 
         {/* Scroll down indicator */}

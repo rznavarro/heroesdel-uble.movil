@@ -11,7 +11,6 @@ import ModuleChatSimple from './components/ModuleChatSimple';
 import ModuleMusic from './components/ModuleMusic';
 import ModuleMemories from './components/ModuleMemories';
 import MainHub from './components/MainHub';
-import InstitutionalLogo from './components/InstitutionalLogo';
 import { motion, AnimatePresence } from 'motion/react';
 import { VORTEX_PROFILES } from './data/profiles';
 import { UserProfile } from './types';
@@ -255,21 +254,16 @@ export default function App() {
 
   if (isInitializing) {
     return (
-      <>
-        <div className="absolute top-8 left-8 z-20">
-          <InstitutionalLogo className="w-16 h-16" onClick={toggleFullscreen} />
-        </div>
-        <div className="min-h-screen bg-vortex-dark flex flex-col items-center justify-center gap-8">
-          <motion.div
-            animate={{ opacity: [0, 1, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
-            className="text-vortex-accent text-3xl font-serif italic tracking-widest text-center"
-          >
-            LOS HÉROES<br/>
-            <span className="text-sm tracking-[0.5em] text-white">DE ÑUBLE</span>
-          </motion.div>
-        </div>
-      </>
+      <div className="min-h-screen bg-vortex-dark flex flex-col items-center justify-center gap-8">
+        <motion.div
+          animate={{ opacity: [0, 1, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity }}
+          className="text-vortex-accent text-3xl font-serif italic tracking-widest text-center"
+        >
+          LOS HÉROES<br/>
+          <span className="text-sm tracking-[0.5em] text-white">DE ÑUBLE</span>
+        </motion.div>
+      </div>
     );
   }
 
@@ -393,7 +387,6 @@ export default function App() {
       {!isMobile && activeTab !== 'hub' && (
         <nav className="fixed top-0 left-0 right-0 h-16 bg-vortex-surface/80 backdrop-blur-md border-b border-white/5 z-40 px-6 flex items-center justify-between">
           <div className="flex items-center gap-6">
-            <InstitutionalLogo className="w-10 h-10" onClick={toggleFullscreen} />
             <button 
               onClick={() => setActiveTab('hub')}
               className="flex items-center gap-2 text-slate-400 hover:text-white transition-all text-[10px] uppercase tracking-widest font-bold group"

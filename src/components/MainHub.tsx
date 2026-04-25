@@ -1,5 +1,4 @@
 import { motion } from 'motion/react';
-import InstitutionalLogo from './InstitutionalLogo';
 import { 
   LayoutDashboard, 
   GraduationCap, 
@@ -48,9 +47,6 @@ interface MainHubProps {
 export default function MainHub({ onSelectModule, userName, onToggleFullscreen, isFullscreen, onLogout }: MainHubProps) {
   return (
     <div className="min-h-screen bg-vortex-dark p-6 md:p-12 animate-in fade-in duration-700">
-      <div className="absolute top-8 left-8 z-20">
-        <InstitutionalLogo className="w-14 h-14" onClick={onToggleFullscreen} />
-      </div>
 
       <header className="max-w-7xl mx-auto mb-16 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 pt-20 md:pt-0">
         {/* Left: Brand + Top Nav */}
