@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { ChevronLeft, Menu, Search, MoreVertical } from 'lucide-react';
-import { useNavigate, useLocation } from 'react-router-dom';
 
 interface MobileHeaderProps {
   title?: string;
@@ -20,31 +19,15 @@ export default function MobileHeader({
   searchable = false,
   onSearch
 }: MobileHeaderProps) {
-  const navigate = useNavigate();
-  const location = useLocation();
   
   const handleBack = () => {
     if (onBack) {
       onBack();
-    } else {
-      navigate(-1);
     }
   };
   
   const getPageTitle = () => {
-    if (title) return title;
-    
-    const path = location.pathname;
-    const titles: Record<string, string> = {
-      '/': 'Inicio',
-      '/academic': 'Académico',
-      '/history': 'Historia',
-      '/chat': 'Chat',
-      '/music': 'Música',
-      '/profile': 'Perfil'
-    };
-    
-    return titles[path] || 'Los Héroes de Ñuble';
+    return title || 'Los Héroes de Ñuble';
   };
   
   return (
