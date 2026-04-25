@@ -1,8 +1,9 @@
 {
-  "name": "react-example",
+  "name": "heroes-ñuble-movil",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "description": "Sistema educativo preuniversitario Los Héroes de Ñuble - Versión móvil",
   "scripts": {
     "dev": "tsx server-supabase.ts",
     "build": "vite build",
@@ -35,7 +36,25 @@
     "autoprefixer": "^10.4.21",
     "tailwindcss": "^4.1.14",
     "tsx": "^4.21.0",
-    "typescript": "~5.8.2",
-    "vite": "^6.2.0"
+    "typescript": "~5.8.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "overrides": {
+    "node-domexception": "npm:web-domexception@^1.0.0"
   }
 }
