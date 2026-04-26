@@ -437,35 +437,35 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
           })}
         </div>
 
-        {/* AI Assistant - Always Available */}
+        {/* AI Assistant - Compact */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="bg-gradient-to-br from-purple-600/20 to-pink-600/20 backdrop-blur-md rounded-xl p-6 border border-purple-500/30"
+          className="bg-gradient-to-br from-purple-600/20 to-pink-600/20 backdrop-blur-md rounded-lg p-4 border border-purple-500/30"
         >
-          <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
-            <Target className="w-6 h-6 text-purple-400" />
-            Asistente IA Matemáticas PAES
+          <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
+            <Target className="w-5 h-5 text-purple-400" />
+            Asistente IA
           </h3>
           
-          <div className="grid md:grid-cols-3 gap-4">
-            <button className="bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/50 rounded-lg p-4 transition-colors group">
-              <Camera className="w-8 h-8 text-purple-300 mx-auto mb-2 group-hover:scale-110 transition-transform" />
-              <h4 className="font-semibold text-white mb-1">Resolver con Foto</h4>
-              <p className="text-purple-200 text-sm">Toma foto del ejercicio y obtén la solución paso a paso</p>
+          <div className="grid grid-cols-3 gap-2">
+            <button className="bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/50 rounded-lg p-3 transition-colors group">
+              <Camera className="w-6 h-6 text-purple-300 mx-auto mb-1 group-hover:scale-110 transition-transform" />
+              <h4 className="font-semibold text-white text-xs mb-1">Resolver</h4>
+              <p className="text-purple-200 text-xs">Foto</p>
             </button>
 
-            <button className="bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/50 rounded-lg p-4 transition-colors group">
-              <Lightbulb className="w-8 h-8 text-yellow-300 mx-auto mb-2 group-hover:scale-110 transition-transform" />
-              <h4 className="font-semibold text-white mb-1">Explicar Concepto</h4>
-              <p className="text-purple-200 text-sm">Pregunta sobre cualquier duda de matemáticas</p>
+            <button className="bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/50 rounded-lg p-3 transition-colors group">
+              <Lightbulb className="w-6 h-6 text-yellow-300 mx-auto mb-1 group-hover:scale-110 transition-transform" />
+              <h4 className="font-semibold text-white text-xs mb-1">Explicar</h4>
+              <p className="text-purple-200 text-xs">Concepto</p>
             </button>
 
-            <button className="bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/50 rounded-lg p-4 transition-colors group">
-              <Zap className="w-8 h-8 text-orange-300 mx-auto mb-2 group-hover:scale-110 transition-transform" />
-              <h4 className="font-semibold text-white mb-1">Generar Ejercicios</h4>
-              <p className="text-purple-200 text-sm">Crea ejercicios de cualquier tema PAES</p>
+            <button className="bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/50 rounded-lg p-3 transition-colors group">
+              <Zap className="w-6 h-6 text-orange-300 mx-auto mb-1 group-hover:scale-110 transition-transform" />
+              <h4 className="font-semibold text-white text-xs mb-1">Generar</h4>
+              <p className="text-purple-200 text-xs">Ejercicios</p>
             </button>
           </div>
         </motion.div>
