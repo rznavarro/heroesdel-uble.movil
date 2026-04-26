@@ -448,7 +448,7 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
             <Target className="w-5 h-5 text-purple-400" />
             Asistente IA
           </h3>
-          
+
           <div className="grid grid-cols-3 gap-2">
             <button className="bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/50 rounded-lg p-3 transition-colors group">
               <Camera className="w-6 h-6 text-purple-300 mx-auto mb-1 group-hover:scale-110 transition-transform" />

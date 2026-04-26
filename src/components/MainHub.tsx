@@ -102,19 +102,19 @@ export default function MainHub({ onSelectModule, userName, onToggleFullscreen, 
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: i * 0.05 }}
             onClick={() => onSelectModule(module.id)}
-            className="group relative flex flex-col items-center justify-center p-3 md:p-8 bg-vortex-surface/40 border border-slate-800 rounded-xl hover:border-[#2563eb]/50 transition-all text-center overflow-hidden h-[120px] md:h-[240px] md:items-start md:text-left"
+            className="group relative flex flex-col items-center justify-center p-3 md:p-8 bg-vortex-surface/40 border border-slate-800 rounded-xl hover:border-vortex-accent/50 transition-all text-center overflow-hidden h-[120px] md:h-[240px] md:items-start md:text-left"
           >
             {/* Background Icon Accent - solo en desktop */}
             <module.icon className="absolute -bottom-4 -right-4 w-32 h-32 opacity-[0.03] group-hover:opacity-[0.06] transition-opacity hidden md:block" />
             
-            <div className="w-8 h-8 md:w-12 md:h-12 bg-slate-900 border border-slate-800 rounded-lg flex items-center justify-center mb-2 md:mb-6 group-hover:border-[#2563eb]/30 group-hover:bg-[#2563eb]/5 transition-all">
-              <module.icon className="w-4 h-4 md:w-6 md:h-6 text-slate-400 group-hover:text-[#2563eb] transition-colors" />
+            <div className="w-8 h-8 md:w-12 md:h-12 bg-slate-900 border border-slate-800 rounded-lg flex items-center justify-center mb-2 md:mb-6 group-hover:border-vortex-accent/30 group-hover:bg-vortex-accent/5 transition-all">
+              <module.icon className="w-4 h-4 md:w-6 md:h-6 text-slate-400 group-hover:text-vortex-accent transition-colors" />
             </div>
             
-            <h3 className="text-xs md:text-xl font-serif italic text-white mb-1 md:mb-2 group-hover:text-[#2563eb] transition-colors leading-tight">{module.label}</h3>
+            <h3 className="text-xs md:text-xl font-serif italic text-white mb-1 md:mb-2 group-hover:text-vortex-accent transition-colors leading-tight">{module.label}</h3>
             <p className="text-[10px] md:text-sm text-slate-500 leading-relaxed group-hover:text-slate-400 transition-colors hidden md:block">{module.desc}</p>
             
-            <div className="mt-auto flex items-center gap-2 text-[8px] md:text-[10px] uppercase tracking-[0.2em] font-bold text-[#2563eb] opacity-0 group-hover:opacity-100 transition-opacity hidden md:flex">
+            <div className="mt-auto flex items-center gap-2 text-[8px] md:text-[10px] uppercase tracking-[0.2em] font-bold text-vortex-accent opacity-0 group-hover:opacity-100 transition-opacity hidden md:flex">
               Acceder Módulo <ChevronRight className="w-3 h-3" />
             </div>
           </motion.button>
