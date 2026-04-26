@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { 
-  ArrowLeft, 
-  Calculator, 
-  BookOpen, 
+import {
+  ArrowLeft,
+  Calculator,
+  BookOpen,
   Brain,
   Camera,
   Lightbulb,
@@ -239,7 +239,7 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             className="flex items-center gap-4 mb-6"
@@ -323,7 +323,7 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
                 <Target className="w-6 h-6 text-purple-400" />
                 Asistente IA Especializado
               </h3>
-              
+
               <div className="grid md:grid-cols-3 gap-4">
                 <button className="bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/50 rounded-lg p-4 transition-colors group">
                   <Camera className="w-8 h-8 text-purple-300 mx-auto mb-2 group-hover:scale-110 transition-transform" />
@@ -357,7 +357,7 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             className="flex items-center gap-4 mb-6"
@@ -414,7 +414,7 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className="flex items-center gap-4 mb-6"
@@ -431,8 +431,8 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
           </div>
         </motion.div>
 
-        {/* 4 Main Axis Buttons */}
-        <div className="grid md:grid-cols-2 gap-4">
+        {/* 4 Main Axis Buttons - 2x2 Grid */}
+        <div className="grid grid-cols-2 gap-4">
           {MATH_CURRICULUM.map((axis, index) => {
             const AxisIcon = axis.icon;
             return (
@@ -444,26 +444,16 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className={`bg-gradient-to-br ${axis.color} backdrop-blur-md rounded-xl p-8 text-left transition-all group hover:border-opacity-70`}
+                className={`bg-gradient-to-br ${axis.color} backdrop-blur-md rounded-xl p-6 text-center transition-all group hover:border-opacity-70 aspect-square flex flex-col justify-center`}
               >
-                <div className="flex items-center gap-4 mb-4">
-                  <AxisIcon className="w-12 h-12 text-white group-hover:scale-110 transition-transform" />
-                  <div>
-                    <h2 className="text-2xl font-bold text-white group-hover:text-purple-300 transition-colors">
-                      {axis.title}
-                    </h2>
-                    <p className="text-purple-200 text-sm">
-                      {axis.topics.length} temas disponibles
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <p className="text-purple-100 text-sm">
-                    Toca para ver todos los temas
-                  </p>
-                  <ChevronRight className="w-6 h-6 text-purple-400 group-hover:translate-x-1 transition-transform" />
-                </div>
+                <AxisIcon className="w-10 h-10 md:w-12 md:h-12 text-white group-hover:scale-110 transition-transform mx-auto mb-3" />
+                <h2 className="text-lg md:text-xl font-bold text-white group-hover:text-purple-300 transition-colors mb-2">
+                  {axis.title}
+                </h2>
+                <p className="text-purple-200 text-xs md:text-sm mb-2">
+                  {axis.topics.length} temas
+                </p>
+                <ChevronRight className="w-5 h-5 text-purple-400 group-hover:translate-x-1 transition-transform mx-auto" />
               </motion.button>
             );
           })}
