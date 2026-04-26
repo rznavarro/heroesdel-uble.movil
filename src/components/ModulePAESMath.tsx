@@ -35,7 +35,7 @@ const MATH_CURRICULUM: ThematicAxis[] = [
     id: 'numeros',
     title: 'NÚMEROS',
     icon: Hash,
-    color: 'from-red-600/20 to-red-800/20 border-red-500/30',
+    color: 'bg-white border-l-4 border-red-500',
     topics: [
       {
         id: 'enteros-racionales',
@@ -69,7 +69,7 @@ const MATH_CURRICULUM: ThematicAxis[] = [
     id: 'algebra-funciones',
     title: 'ÁLGEBRA Y FUNCIONES',
     icon: Variable,
-    color: 'from-slate-600/20 to-slate-800/20 border-slate-500/30',
+    color: 'bg-white border-l-4 border-gray-800',
     topics: [
       {
         id: 'expresiones-algebraicas',
@@ -132,7 +132,7 @@ const MATH_CURRICULUM: ThematicAxis[] = [
     id: 'geometria',
     title: 'GEOMETRÍA',
     icon: Triangle,
-    color: 'from-gray-600/20 to-gray-800/20 border-gray-500/30',
+    color: 'bg-white border-l-4 border-red-500',
     topics: [
       {
         id: 'figuras-geometricas',
@@ -174,7 +174,7 @@ const MATH_CURRICULUM: ThematicAxis[] = [
     id: 'probabilidad-estadistica',
     title: 'PROBABILIDAD Y ESTADÍSTICA',
     icon: BarChart3,
-    color: 'from-zinc-600/20 to-zinc-800/20 border-zinc-500/30',
+    color: 'bg-white border-l-4 border-gray-800',
     topics: [
       {
         id: 'representacion-datos',
@@ -432,7 +432,7 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="bg-white rounded-lg shadow-lg p-4 text-center transition-all group hover:shadow-xl border-l-4 border-red-500 h-24 md:h-28 flex flex-col justify-center"
+                className={`${axis.color} rounded-lg shadow-lg p-4 text-center transition-all group hover:shadow-xl h-24 md:h-28 flex flex-col justify-center`}
               >
                 <AxisIcon className="w-6 h-6 md:w-7 md:h-7 text-red-600 group-hover:scale-110 transition-transform mx-auto mb-1" />
                 <h2 className="text-sm md:text-base font-bold text-gray-800 group-hover:text-red-700 transition-colors mb-1 leading-tight">
