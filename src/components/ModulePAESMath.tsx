@@ -35,7 +35,7 @@ const MATH_CURRICULUM: ThematicAxis[] = [
     id: 'numeros',
     title: 'NÚMEROS',
     icon: Hash,
-    color: 'from-blue-600/20 to-blue-800/20 border-blue-500/30',
+    color: 'from-red-600/20 to-red-800/20 border-red-500/30',
     topics: [
       {
         id: 'enteros-racionales',
@@ -69,7 +69,7 @@ const MATH_CURRICULUM: ThematicAxis[] = [
     id: 'algebra-funciones',
     title: 'ÁLGEBRA Y FUNCIONES',
     icon: Variable,
-    color: 'from-green-600/20 to-green-800/20 border-green-500/30',
+    color: 'from-slate-600/20 to-slate-800/20 border-slate-500/30',
     topics: [
       {
         id: 'expresiones-algebraicas',
@@ -132,7 +132,7 @@ const MATH_CURRICULUM: ThematicAxis[] = [
     id: 'geometria',
     title: 'GEOMETRÍA',
     icon: Triangle,
-    color: 'from-purple-600/20 to-purple-800/20 border-purple-500/30',
+    color: 'from-gray-600/20 to-gray-800/20 border-gray-500/30',
     topics: [
       {
         id: 'figuras-geometricas',
@@ -174,7 +174,7 @@ const MATH_CURRICULUM: ThematicAxis[] = [
     id: 'probabilidad-estadistica',
     title: 'PROBABILIDAD Y ESTADÍSTICA',
     icon: BarChart3,
-    color: 'from-orange-600/20 to-orange-800/20 border-orange-500/30',
+    color: 'from-zinc-600/20 to-zinc-800/20 border-zinc-500/30',
     topics: [
       {
         id: 'representacion-datos',
@@ -236,23 +236,26 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
   // Vista de estudio específico del tema
   if (selectedTopic && selectedAxis) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-red-50 p-4">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex items-center gap-4 mb-6"
+            className="bg-white rounded-xl shadow-lg p-6 mb-6 border-l-4 border-red-500"
           >
-            <button
-              onClick={handleBackToTopics}
-              className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
-            >
-              <ArrowLeft className="w-6 h-6 text-white" />
-            </button>
+            <div className="flex items-center gap-4 mb-4">
+              <button
+                onClick={handleBackToTopics}
+                className="flex items-center text-red-600 hover:text-red-800 transition-colors"
+              >
+                <ArrowLeft className="w-5 h-5 mr-2" />
+                Volver a Temas
+              </button>
+            </div>
             <div>
-              <h1 className="text-2xl font-bold text-white">{selectedTopic.title}</h1>
-              <p className="text-purple-200">{selectedAxis.title}</p>
+              <h1 className="text-2xl font-bold text-gray-800">{selectedTopic.title}</h1>
+              <p className="text-gray-600">{selectedAxis.title}</p>
             </div>
           </motion.div>
 
@@ -262,13 +265,13 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white/10 backdrop-blur-md rounded-xl p-6"
+              className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-gray-800"
             >
-              <h3 className="text-lg font-semibold text-white mb-4">Contenidos del tema:</h3>
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">Contenidos del tema:</h3>
               <ul className="space-y-2">
                 {selectedTopic.description.map((desc, index) => (
-                  <li key={index} className="text-purple-100 flex items-start gap-2">
-                    <span className="text-purple-400 mt-1">•</span>
+                  <li key={index} className="text-gray-700 flex items-start gap-2">
+                    <span className="text-red-600 mt-1">•</span>
                     {desc}
                   </li>
                 ))}
@@ -282,14 +285,14 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.1 }}
-                className="bg-gradient-to-br from-blue-600/20 to-blue-800/20 backdrop-blur-md rounded-xl p-6 border border-blue-500/30 hover:border-blue-400/50 transition-colors cursor-pointer"
+                className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-red-500 hover:shadow-xl transition-all cursor-pointer"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <BookOpen className="w-8 h-8 text-blue-400" />
-                  <h3 className="text-xl font-semibold text-white">Cuestionario</h3>
+                  <BookOpen className="w-8 h-8 text-red-600" />
+                  <h3 className="text-xl font-semibold text-gray-800">Cuestionario</h3>
                 </div>
-                <p className="text-blue-100 mb-4">15-20 preguntas tipo PAES sobre este tema</p>
-                <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg transition-colors">
+                <p className="text-gray-600 mb-4">15-20 preguntas tipo PAES sobre este tema</p>
+                <button className="w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg transition-colors">
                   Comenzar Cuestionario
                 </button>
               </motion.div>
@@ -299,14 +302,14 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 }}
-                className="bg-gradient-to-br from-green-600/20 to-green-800/20 backdrop-blur-md rounded-xl p-6 border border-green-500/30 hover:border-green-400/50 transition-colors cursor-pointer"
+                className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-gray-800 hover:shadow-xl transition-all cursor-pointer"
               >
                 <div className="flex items-center gap-3 mb-4">
-                  <Brain className="w-8 h-8 text-green-400" />
-                  <h3 className="text-xl font-semibold text-white">Flashcards</h3>
+                  <Brain className="w-8 h-8 text-gray-800" />
+                  <h3 className="text-xl font-semibold text-gray-800">Flashcards</h3>
                 </div>
-                <p className="text-green-100 mb-4">12-15 tarjetas de conceptos clave</p>
-                <button className="w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg transition-colors">
+                <p className="text-gray-600 mb-4">12-15 tarjetas de conceptos clave</p>
+                <button className="w-full bg-gray-800 hover:bg-gray-900 text-white py-2 px-4 rounded-lg transition-colors">
                   Estudiar Flashcards
                 </button>
               </motion.div>
@@ -317,9 +320,9 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="bg-purple-600/10 backdrop-blur-md rounded-lg p-4 border border-purple-500/20"
+              className="bg-red-50 rounded-lg p-4 border-2 border-red-200"
             >
-              <p className="text-purple-200 text-center">
+              <p className="text-gray-700 text-center">
                 💡 <strong>Tip:</strong> Usa el Asistente IA desde la vista principal para resolver ejercicios específicos de este tema
               </p>
             </motion.div>
@@ -333,25 +336,28 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
   if (selectedAxis) {
     const AxisIcon = selectedAxis.icon;
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-red-50 p-4">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex items-center gap-4 mb-6"
+            className="bg-white rounded-xl shadow-lg p-6 mb-6 border-l-4 border-red-500"
           >
-            <button
-              onClick={handleBackToAxis}
-              className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
-            >
-              <ArrowLeft className="w-6 h-6 text-white" />
-            </button>
+            <div className="flex items-center gap-4 mb-4">
+              <button
+                onClick={handleBackToAxis}
+                className="flex items-center text-red-600 hover:text-red-800 transition-colors"
+              >
+                <ArrowLeft className="w-5 h-5 mr-2" />
+                Volver a Ejes
+              </button>
+            </div>
             <div className="flex items-center gap-3">
-              <AxisIcon className="w-8 h-8 text-purple-400" />
+              <AxisIcon className="w-8 h-8 text-red-600" />
               <div>
-                <h1 className="text-3xl font-bold text-white">{selectedAxis.title}</h1>
-                <p className="text-purple-200">Selecciona un tema para estudiar</p>
+                <h1 className="text-3xl font-bold text-gray-800">{selectedAxis.title}</h1>
+                <p className="text-gray-600">Selecciona un tema para estudiar</p>
               </div>
             </div>
           </motion.div>
@@ -367,18 +373,18 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className={`bg-gradient-to-br ${selectedAxis.color} backdrop-blur-md rounded-xl p-6 text-left transition-all group hover:border-opacity-70`}
+                className="bg-white rounded-xl shadow-lg p-6 text-left transition-all group hover:shadow-xl border-l-4 border-red-500"
               >
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
-                    <h3 className="font-semibold text-white group-hover:text-purple-300 transition-colors text-lg mb-2">
+                    <h3 className="font-semibold text-gray-800 group-hover:text-red-700 transition-colors text-lg mb-2">
                       {topic.title}
                     </h3>
-                    <p className="text-purple-200 text-sm line-clamp-2">
+                    <p className="text-gray-600 text-sm line-clamp-2">
                       {topic.description[0]}
                     </p>
                   </div>
-                  <ChevronRight className="w-6 h-6 text-purple-400 group-hover:translate-x-1 transition-transform ml-4" />
+                  <ChevronRight className="w-6 h-6 text-red-600 group-hover:translate-x-1 transition-transform ml-4" />
                 </div>
               </motion.button>
             ))}
@@ -390,23 +396,26 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
 
   // Vista principal con los 4 ejes temáticos
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-red-50 p-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center gap-4 mb-6"
+          className="bg-white rounded-xl shadow-lg p-6 mb-6 border-l-4 border-red-500"
         >
-          <button
-            onClick={onBack}
-            className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
-          >
-            <ArrowLeft className="w-6 h-6 text-white" />
-          </button>
-          <div>
-            <h1 className="text-3xl font-bold text-white">Matemáticas PAES M1</h1>
-            <p className="text-purple-200">Selecciona un eje temático</p>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={onBack}
+              className="flex items-center text-red-600 hover:text-red-800 transition-colors"
+            >
+              <ArrowLeft className="w-5 h-5 mr-2" />
+              Volver al Hub
+            </button>
+          </div>
+          <div className="mt-4">
+            <h1 className="text-3xl font-bold text-gray-800">Matemáticas PAES M1</h1>
+            <p className="text-gray-600">Selecciona un eje temático</p>
           </div>
         </motion.div>
 
@@ -423,13 +432,13 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className={`bg-gradient-to-br ${axis.color} backdrop-blur-md rounded-lg p-4 text-center transition-all group hover:border-opacity-70 h-24 md:h-28 flex flex-col justify-center`}
+                className="bg-white rounded-lg shadow-lg p-4 text-center transition-all group hover:shadow-xl border-l-4 border-red-500 h-24 md:h-28 flex flex-col justify-center"
               >
-                <AxisIcon className="w-6 h-6 md:w-7 md:h-7 text-white group-hover:scale-110 transition-transform mx-auto mb-1" />
-                <h2 className="text-sm md:text-base font-bold text-white group-hover:text-purple-300 transition-colors mb-1 leading-tight">
+                <AxisIcon className="w-6 h-6 md:w-7 md:h-7 text-red-600 group-hover:scale-110 transition-transform mx-auto mb-1" />
+                <h2 className="text-sm md:text-base font-bold text-gray-800 group-hover:text-red-700 transition-colors mb-1 leading-tight">
                   {axis.title}
                 </h2>
-                <p className="text-purple-200 text-xs">
+                <p className="text-gray-600 text-xs">
                   {axis.topics.length} temas
                 </p>
               </motion.button>
@@ -442,30 +451,30 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="bg-gradient-to-br from-purple-600/20 to-pink-600/20 backdrop-blur-md rounded-lg p-4 border border-purple-500/30"
+          className="bg-white rounded-lg shadow-lg p-4 border-l-4 border-gray-800"
         >
-          <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-            <Target className="w-5 h-5 text-purple-400" />
+          <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
+            <Target className="w-5 h-5 text-gray-800" />
             Asistente IA
           </h3>
 
           <div className="grid grid-cols-3 gap-2">
-            <button className="bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/50 rounded-lg p-3 transition-colors group">
-              <Camera className="w-6 h-6 text-purple-300 mx-auto mb-1 group-hover:scale-110 transition-transform" />
-              <h4 className="font-semibold text-white text-xs mb-1">Resolver</h4>
-              <p className="text-purple-200 text-xs">Foto</p>
+            <button className="bg-red-50 hover:bg-red-100 border-2 border-red-200 hover:border-red-400 rounded-lg p-3 transition-colors group">
+              <Camera className="w-6 h-6 text-red-600 mx-auto mb-1 group-hover:scale-110 transition-transform" />
+              <h4 className="font-semibold text-red-800 text-xs mb-1">Resolver</h4>
+              <p className="text-gray-600 text-xs">Foto</p>
             </button>
 
-            <button className="bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/50 rounded-lg p-3 transition-colors group">
-              <Lightbulb className="w-6 h-6 text-yellow-300 mx-auto mb-1 group-hover:scale-110 transition-transform" />
-              <h4 className="font-semibold text-white text-xs mb-1">Explicar</h4>
-              <p className="text-purple-200 text-xs">Concepto</p>
+            <button className="bg-gray-50 hover:bg-gray-100 border-2 border-gray-300 hover:border-gray-500 rounded-lg p-3 transition-colors group">
+              <Lightbulb className="w-6 h-6 text-gray-700 mx-auto mb-1 group-hover:scale-110 transition-transform" />
+              <h4 className="font-semibold text-gray-800 text-xs mb-1">Explicar</h4>
+              <p className="text-gray-600 text-xs">Concepto</p>
             </button>
 
-            <button className="bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/50 rounded-lg p-3 transition-colors group">
-              <Zap className="w-6 h-6 text-orange-300 mx-auto mb-1 group-hover:scale-110 transition-transform" />
-              <h4 className="font-semibold text-white text-xs mb-1">Generar</h4>
-              <p className="text-purple-200 text-xs">Ejercicios</p>
+            <button className="bg-red-50 hover:bg-red-100 border-2 border-red-200 hover:border-red-400 rounded-lg p-3 transition-colors group">
+              <Zap className="w-6 h-6 text-red-600 mx-auto mb-1 group-hover:scale-110 transition-transform" />
+              <h4 className="font-semibold text-red-800 text-xs mb-1">Generar</h4>
+              <p className="text-gray-600 text-xs">Ejercicios</p>
             </button>
           </div>
         </motion.div>
