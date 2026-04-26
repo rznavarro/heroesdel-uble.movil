@@ -6,6 +6,7 @@ import Dashboard from './components/Dashboard';
 import ModuleAcademic from './components/ModuleAcademic';
 import ModuleHistory from './components/ModuleHistory';
 import ModulePhysical from './components/ModulePhysical';
+import ModulePAESMath from './components/ModulePAESMath';
 import ModuleSchedule from './components/ModuleSchedule';
 import ModuleChatSimple from './components/ModuleChatSimple';
 import ModuleMusic from './components/ModuleMusic';
@@ -292,6 +293,7 @@ export default function App() {
           return <ModuleHistory />;
         case 'languages':
         case 'paes-math':
+          return <ModulePAESMath onBack={() => setCurrentView('hub')} />;
         case 'paes-lang':
         case 'psychology':
         case 'doctrine':
