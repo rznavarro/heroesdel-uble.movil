@@ -489,11 +489,11 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
   if (showQuiz && selectedTopic?.quiz && selectedAxis) {
     const quiz = selectedTopic.quiz;
     const currentQ = quiz[currentQuestion];
-    
+
     if (showResults) {
       const score = calculateScore();
       const correctAnswers = selectedAnswers.filter((answer, index) => answer === quiz[index].correctAnswer).length;
-      
+
       return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-red-50 p-4">
           <div className="max-w-4xl mx-auto">
@@ -536,7 +536,7 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
                   Tiempo: {getTimeElapsed()}
                 </p>
               </div>
-              
+
               <div className="mb-6">
                 {score >= 70 ? (
                   <div className="text-green-600">
@@ -592,7 +592,7 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
                 {quiz.map((question, index) => {
                   const userAnswer = selectedAnswers[index];
                   const isCorrect = userAnswer === question.correctAnswer;
-                  
+
                   return (
                     <div key={question.id} className="border rounded-lg p-4">
                       <div className="flex items-start gap-3 mb-2">
@@ -663,7 +663,7 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
                   <span>{Math.round(((currentQuestion + 1) / quiz.length) * 100)}% completado</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
-                  <div 
+                  <div
                     className="bg-red-600 h-2 rounded-full transition-all duration-300"
                     style={{ width: `${((currentQuestion + 1) / quiz.length) * 100}%` }}
                   ></div>
@@ -682,17 +682,16 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
             <h3 className="text-lg font-semibold text-gray-800 mb-6">
               {currentQ.question}
             </h3>
-            
+
             <div className="space-y-3">
               {currentQ.options.map((option, index) => (
                 <button
                   key={index}
                   onClick={() => selectAnswer(index)}
-                  className={`w-full p-4 text-left rounded-lg border-2 transition-all ${
-                    selectedAnswers[currentQuestion] === index
+                  className={`w-full p-4 text-left rounded-lg border-2 transition-all ${selectedAnswers[currentQuestion] === index
                       ? 'border-red-500 bg-red-50 text-red-800'
                       : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
-                  }`}
+                    }`}
                 >
                   <span className="font-medium mr-3">
                     {String.fromCharCode(65 + index)}.
@@ -713,15 +712,14 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
               <button
                 onClick={prevQuestion}
                 disabled={currentQuestion === 0}
-                className={`px-6 py-2 rounded-lg transition-colors ${
-                  currentQuestion === 0
+                className={`px-6 py-2 rounded-lg transition-colors ${currentQuestion === 0
                     ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
                     : 'bg-gray-600 hover:bg-gray-700 text-white'
-                }`}
+                  }`}
               >
                 Anterior
               </button>
-              
+
               <div className="text-sm text-gray-600">
                 {selectedAnswers[currentQuestion] !== undefined ? (
                   <span className="text-green-600">✓ Respondida</span>
@@ -729,17 +727,16 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
                   <span>Selecciona una respuesta</span>
                 )}
               </div>
-              
+
               <button
                 onClick={nextQuestion}
                 disabled={selectedAnswers[currentQuestion] === undefined}
-                className={`px-6 py-2 rounded-lg transition-colors ${
-                  selectedAnswers[currentQuestion] === undefined
+                className={`px-6 py-2 rounded-lg transition-colors ${selectedAnswers[currentQuestion] === undefined
                     ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
                     : currentQuestion === quiz.length - 1
-                    ? 'bg-green-600 hover:bg-green-700 text-white'
-                    : 'bg-red-600 hover:bg-red-700 text-white'
-                }`}
+                      ? 'bg-green-600 hover:bg-green-700 text-white'
+                      : 'bg-red-600 hover:bg-red-700 text-white'
+                  }`}
               >
                 {currentQuestion === quiz.length - 1 ? 'Finalizar' : 'Siguiente'}
               </button>
@@ -811,14 +808,13 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
                 <p className="text-gray-600 mb-4">
                   {selectedTopic.quiz ? `${selectedTopic.quiz.length} preguntas tipo PAES` : '15-20 preguntas tipo PAES sobre este tema'}
                 </p>
-                <button 
+                <button
                   onClick={startQuiz}
                   disabled={!selectedTopic.quiz}
-                  className={`w-full py-2 px-4 rounded-lg transition-colors ${
-                    selectedTopic.quiz 
-                      ? 'bg-red-600 hover:bg-red-700 text-white' 
+                  className={`w-full py-2 px-4 rounded-lg transition-colors ${selectedTopic.quiz
+                      ? 'bg-red-600 hover:bg-red-700 text-white'
                       : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                  }`}
+                    }`}
                 >
                   {selectedTopic.quiz ? 'Comenzar Cuestionario' : 'Próximamente'}
                 </button>
