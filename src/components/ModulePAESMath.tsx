@@ -27,11 +27,18 @@ interface QuizQuestion {
   explanation: string;
 }
 
+interface Flashcard {
+  id: number;
+  question: string;
+  answer: string;
+}
+
 interface Topic {
   id: string;
   title: string;
   description: string[];
   quiz?: QuizQuestion[];
+  flashcards?: Flashcard[];
 }
 
 interface ThematicAxis {
@@ -237,6 +244,83 @@ const MATH_CURRICULUM: ThematicAxis[] = [
             ],
             correctAnswer: 1,
             explanation: "Para resolver 2x = -10, dividimos ambos lados por 2: x = -10/2 = -5"
+          }
+        ],
+        flashcards: [
+          {
+            id: 1,
+            question: "¿Qué sucede con el signo al multiplicar dos números enteros de distinto signo?",
+            answer: "El resultado es siempre un número negativo."
+          },
+          {
+            id: 2,
+            question: "¿Cómo se define el valor absoluto de un número entero?",
+            answer: "Es la distancia del número al cero en la recta numérica, por lo que siempre es un valor positivo o cero."
+          },
+          {
+            id: 3,
+            question: "¿Cuál es el orden correcto de mayor a menor para los números -10, -5 y -15?",
+            answer: "-5 > -10 > -15 (En los negativos, el que está más cerca del cero es mayor)."
+          },
+          {
+            id: 4,
+            question: "¿Qué es un número racional (conjunto Q)?",
+            answer: "Es cualquier número que puede expresarse como el cociente entre dos números enteros, con el denominador distinto de cero."
+          },
+          {
+            id: 5,
+            question: "¿Cuál es la regla para sumar fracciones con distinto denominador?",
+            answer: "Se debe encontrar un mínimo común múltiplo (MCM) para igualar denominadores o usar el método de multiplicación cruzada."
+          },
+          {
+            id: 6,
+            question: "¿A qué decimal equivale la fracción 3/8?",
+            answer: "0,375."
+          },
+          {
+            id: 7,
+            question: "¿Cómo se transforma un decimal periódico (ej: 0,444...) a fracción?",
+            answer: "Se coloca el número en el numerador y en el denominador tantos nueves como cifras tenga el periodo (ej: 4/9)."
+          },
+          {
+            id: 8,
+            question: "¿Cuál es el inverso aditivo de -3/4?",
+            answer: "3/4 (es el mismo número con signo opuesto)."
+          },
+          {
+            id: 9,
+            question: "¿Cuál es el inverso multiplicativo (recíproco) de -2/5?",
+            answer: "-5/2 (se invierte la fracción manteniendo el signo)."
+          },
+          {
+            id: 10,
+            question: "¿Qué número es mayor: -0,5 o -1/4?",
+            answer: "-1/4 (porque -0,25 está más a la derecha en la recta numérica que -0,5)."
+          },
+          {
+            id: 11,
+            question: "¿Cuál es el resultado de la operación -8 + (-5) - (-10)?",
+            answer: "-3 (se resuelve como -8 - 5 + 10)."
+          },
+          {
+            id: 12,
+            question: "¿Qué propiedad indica que entre dos números racionales siempre existe otro número racional?",
+            answer: "La propiedad de densidad de los números racionales."
+          },
+          {
+            id: 13,
+            question: "¿Cómo se multiplican dos fracciones?",
+            answer: "Se multiplican los numeradores entre sí y los denominadores entre sí de forma lineal."
+          },
+          {
+            id: 14,
+            question: "Si la temperatura es de -4°C y baja 9°C más, ¿cuál es la temperatura final?",
+            answer: "-13°C."
+          },
+          {
+            id: 15,
+            question: "¿Cuál es el orden de prioridad en una operación combinada de números racionales?",
+            answer: "1. Paréntesis, 2. Potencias, 3. Multiplicación y división (de izquierda a derecha), 4. Suma y resta."
           }
         ]
       },
@@ -595,6 +679,9 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
   const [showResults, setShowResults] = useState(false);
   const [quizStartTime, setQuizStartTime] = useState<Date | null>(null);
+  const [showFlashcards, setShowFlashcards] = useState(false);
+  const [currentFlashcard, setCurrentFlashcard] = useState(0);
+  const [showAnswer, setShowAnswer] = useState(false);
 
   const handleAxisClick = (axis: ThematicAxis) => {
     setSelectedAxis(axis);
@@ -617,6 +704,33 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
     setSelectedAnswers([]);
     setShowResults(false);
     setQuizStartTime(null);
+    setShowFlashcards(false);
+    setCurrentFlashcard(0);
+    setShowAnswer(false);
+  };
+
+  const startFlashcards = () => {
+    setShowFlashcards(true);
+    setCurrentFlashcard(0);
+    setShowAnswer(false);
+  };
+
+  const nextFlashcard = () => {
+    if (selectedTopic?.flashcards && currentFlashcard < selectedTopic.flashcards.length - 1) {
+      setCurrentFlashcard(currentFlashcard + 1);
+      setShowAnswer(false);
+    }
+  };
+
+  const prevFlashcard = () => {
+    if (currentFlashcard > 0) {
+      setCurrentFlashcard(currentFlashcard - 1);
+      setShowAnswer(false);
+    }
+  };
+
+  const toggleAnswer = () => {
+    setShowAnswer(!showAnswer);
   };
 
   const startQuiz = () => {
@@ -666,6 +780,135 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
     const seconds = diff % 60;
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
+
+  // Vista de flashcards
+  if (showFlashcards && selectedTopic?.flashcards && selectedAxis) {
+    const flashcards = selectedTopic.flashcards;
+    const currentCard = flashcards[currentFlashcard];
+
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-red-50 p-4">
+        <div className="max-w-4xl mx-auto">
+          {/* Header */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white rounded-xl shadow-lg p-6 mb-6 border-l-4 border-red-500"
+          >
+            <div className="flex items-center justify-between mb-4">
+              <button
+                onClick={handleBackToTopics}
+                className="flex items-center text-red-600 hover:text-red-800 transition-colors"
+              >
+                <ArrowLeft className="w-5 h-5 mr-2" />
+                Salir de Flashcards
+              </button>
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-gray-800">Flashcards</h1>
+              <p className="text-gray-600">{selectedTopic.title}</p>
+              <div className="mt-2">
+                <div className="flex items-center justify-between text-sm text-gray-600">
+                  <span>Tarjeta {currentFlashcard + 1} de {flashcards.length}</span>
+                  <span>{Math.round(((currentFlashcard + 1) / flashcards.length) * 100)}% completado</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
+                  <div
+                    className="bg-red-600 h-2 rounded-full transition-all duration-300"
+                    style={{ width: `${((currentFlashcard + 1) / flashcards.length) * 100}%` }}
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Flashcard */}
+          <motion.div
+            key={currentFlashcard}
+            initial={{ opacity: 0, rotateY: 180 }}
+            animate={{ opacity: 1, rotateY: 0 }}
+            className="bg-white rounded-xl shadow-lg p-8 mb-6 border-l-4 border-gray-800 min-h-[300px] flex flex-col justify-center"
+          >
+            <div className="text-center">
+              <div className="mb-6">
+                <Brain className="w-12 h-12 text-gray-800 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                  {showAnswer ? 'Respuesta:' : 'Pregunta:'}
+                </h3>
+              </div>
+              
+              <div className="text-gray-700 text-lg leading-relaxed mb-8">
+                {showAnswer ? currentCard.answer : currentCard.question}
+              </div>
+
+              <button
+                onClick={toggleAnswer}
+                className={`px-8 py-3 rounded-lg font-medium transition-all ${
+                  showAnswer 
+                    ? 'bg-gray-600 hover:bg-gray-700 text-white' 
+                    : 'bg-red-600 hover:bg-red-700 text-white'
+                }`}
+              >
+                {showAnswer ? 'Ver Pregunta' : 'Ver Respuesta'}
+              </button>
+            </div>
+          </motion.div>
+
+          {/* Navigation */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-red-500"
+          >
+            <div className="flex justify-between items-center">
+              <button
+                onClick={prevFlashcard}
+                disabled={currentFlashcard === 0}
+                className={`px-6 py-2 rounded-lg transition-colors ${
+                  currentFlashcard === 0
+                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    : 'bg-gray-600 hover:bg-gray-700 text-white'
+                }`}
+              >
+                Anterior
+              </button>
+              
+              <div className="text-sm text-gray-600 text-center">
+                <div className="mb-1">Tarjeta {currentFlashcard + 1} de {flashcards.length}</div>
+                <div className="text-xs">
+                  {showAnswer ? '✓ Respuesta vista' : 'Toca "Ver Respuesta" para estudiar'}
+                </div>
+              </div>
+              
+              <button
+                onClick={nextFlashcard}
+                disabled={currentFlashcard === flashcards.length - 1}
+                className={`px-6 py-2 rounded-lg transition-colors ${
+                  currentFlashcard === flashcards.length - 1
+                    ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                    : 'bg-red-600 hover:bg-red-700 text-white'
+                }`}
+              >
+                Siguiente
+              </button>
+            </div>
+          </motion.div>
+
+          {/* Study tip */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            className="bg-red-50 rounded-lg p-4 border-2 border-red-200 mt-4"
+          >
+            <p className="text-gray-700 text-center text-sm">
+              💡 <strong>Tip:</strong> Lee la pregunta, piensa en la respuesta, luego verifica con "Ver Respuesta"
+            </p>
+          </motion.div>
+        </div>
+      </div>
+    );
+  }
 
   // Vista del cuestionario
   if (showQuiz && selectedTopic?.quiz && selectedAxis) {
@@ -1013,9 +1256,19 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
                   <Brain className="w-8 h-8 text-gray-800" />
                   <h3 className="text-xl font-semibold text-gray-800">Flashcards</h3>
                 </div>
-                <p className="text-gray-600 mb-4">12-15 tarjetas de conceptos clave</p>
-                <button className="w-full bg-gray-800 hover:bg-gray-900 text-white py-2 px-4 rounded-lg transition-colors">
-                  Estudiar Flashcards
+                <p className="text-gray-600 mb-4">
+                  {selectedTopic.flashcards ? `${selectedTopic.flashcards.length} tarjetas de conceptos clave` : '12-15 tarjetas de conceptos clave'}
+                </p>
+                <button 
+                  onClick={startFlashcards}
+                  disabled={!selectedTopic.flashcards}
+                  className={`w-full py-2 px-4 rounded-lg transition-colors ${
+                    selectedTopic.flashcards 
+                      ? 'bg-gray-800 hover:bg-gray-900 text-white' 
+                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  }`}
+                >
+                  {selectedTopic.flashcards ? 'Estudiar Flashcards' : 'Próximamente'}
                 </button>
               </motion.div>
             </div>
