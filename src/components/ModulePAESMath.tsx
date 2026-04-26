@@ -312,37 +312,16 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
               </motion.div>
             </div>
 
-            {/* AI Assistant Tools */}
+            {/* Note about AI Assistant */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="bg-gradient-to-br from-purple-600/20 to-pink-600/20 backdrop-blur-md rounded-xl p-6 border border-purple-500/30"
+              className="bg-purple-600/10 backdrop-blur-md rounded-lg p-4 border border-purple-500/20"
             >
-              <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
-                <Target className="w-6 h-6 text-purple-400" />
-                Asistente IA Especializado
-              </h3>
-
-              <div className="grid md:grid-cols-3 gap-4">
-                <button className="bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/50 rounded-lg p-4 transition-colors group">
-                  <Camera className="w-8 h-8 text-purple-300 mx-auto mb-2 group-hover:scale-110 transition-transform" />
-                  <h4 className="font-semibold text-white mb-1">Resolver con Foto</h4>
-                  <p className="text-purple-200 text-sm">Toma foto del ejercicio y obtén la solución paso a paso</p>
-                </button>
-
-                <button className="bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/50 rounded-lg p-4 transition-colors group">
-                  <Lightbulb className="w-8 h-8 text-yellow-300 mx-auto mb-2 group-hover:scale-110 transition-transform" />
-                  <h4 className="font-semibold text-white mb-1">Explicar Concepto</h4>
-                  <p className="text-purple-200 text-sm">Pregunta sobre cualquier duda específica del tema</p>
-                </button>
-
-                <button className="bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/50 rounded-lg p-4 transition-colors group">
-                  <Zap className="w-8 h-8 text-orange-300 mx-auto mb-2 group-hover:scale-110 transition-transform" />
-                  <h4 className="font-semibold text-white mb-1">Generar Ejercicios</h4>
-                  <p className="text-purple-200 text-sm">Crea ejercicios adicionales para practicar más</p>
-                </button>
-              </div>
+              <p className="text-purple-200 text-center">
+                💡 <strong>Tip:</strong> Usa el Asistente IA desde la vista principal para resolver ejercicios específicos de este tema
+              </p>
             </motion.div>
           </div>
         </div>
@@ -431,8 +410,8 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
           </div>
         </motion.div>
 
-        {/* 4 Main Axis Buttons - 2x2 Grid */}
-        <div className="grid grid-cols-2 gap-4">
+        {/* 4 Main Axis Buttons - 2x2 Grid Compact */}
+        <div className="grid grid-cols-2 gap-3 mb-6">
           {MATH_CURRICULUM.map((axis, index) => {
             const AxisIcon = axis.icon;
             return (
@@ -444,20 +423,52 @@ export default function ModulePAESMath({ onBack }: ModulePAESMathProps) {
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className={`bg-gradient-to-br ${axis.color} backdrop-blur-md rounded-xl p-6 text-center transition-all group hover:border-opacity-70 aspect-square flex flex-col justify-center`}
+                className={`bg-gradient-to-br ${axis.color} backdrop-blur-md rounded-lg p-4 text-center transition-all group hover:border-opacity-70 h-24 md:h-28 flex flex-col justify-center`}
               >
-                <AxisIcon className="w-10 h-10 md:w-12 md:h-12 text-white group-hover:scale-110 transition-transform mx-auto mb-3" />
-                <h2 className="text-lg md:text-xl font-bold text-white group-hover:text-purple-300 transition-colors mb-2">
+                <AxisIcon className="w-6 h-6 md:w-7 md:h-7 text-white group-hover:scale-110 transition-transform mx-auto mb-1" />
+                <h2 className="text-sm md:text-base font-bold text-white group-hover:text-purple-300 transition-colors mb-1 leading-tight">
                   {axis.title}
                 </h2>
-                <p className="text-purple-200 text-xs md:text-sm mb-2">
+                <p className="text-purple-200 text-xs">
                   {axis.topics.length} temas
                 </p>
-                <ChevronRight className="w-5 h-5 text-purple-400 group-hover:translate-x-1 transition-transform mx-auto" />
               </motion.button>
             );
           })}
         </div>
+
+        {/* AI Assistant - Always Available */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="bg-gradient-to-br from-purple-600/20 to-pink-600/20 backdrop-blur-md rounded-xl p-6 border border-purple-500/30"
+        >
+          <h3 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
+            <Target className="w-6 h-6 text-purple-400" />
+            Asistente IA Matemáticas PAES
+          </h3>
+          
+          <div className="grid md:grid-cols-3 gap-4">
+            <button className="bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/50 rounded-lg p-4 transition-colors group">
+              <Camera className="w-8 h-8 text-purple-300 mx-auto mb-2 group-hover:scale-110 transition-transform" />
+              <h4 className="font-semibold text-white mb-1">Resolver con Foto</h4>
+              <p className="text-purple-200 text-sm">Toma foto del ejercicio y obtén la solución paso a paso</p>
+            </button>
+
+            <button className="bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/50 rounded-lg p-4 transition-colors group">
+              <Lightbulb className="w-8 h-8 text-yellow-300 mx-auto mb-2 group-hover:scale-110 transition-transform" />
+              <h4 className="font-semibold text-white mb-1">Explicar Concepto</h4>
+              <p className="text-purple-200 text-sm">Pregunta sobre cualquier duda de matemáticas</p>
+            </button>
+
+            <button className="bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/50 rounded-lg p-4 transition-colors group">
+              <Zap className="w-8 h-8 text-orange-300 mx-auto mb-2 group-hover:scale-110 transition-transform" />
+              <h4 className="font-semibold text-white mb-1">Generar Ejercicios</h4>
+              <p className="text-purple-200 text-sm">Crea ejercicios de cualquier tema PAES</p>
+            </button>
+          </div>
+        </motion.div>
       </div>
     </div>
   );
