@@ -246,6 +246,188 @@ const MATH_CURRICULUM: ThematicAxis[] = [
         description: [
           'Concepto y cálculo de porcentaje.',
           'Problemas que involucren porcentaje en diversos contextos.'
+        ],
+        quiz: [
+          {
+            id: 1,
+            question: "¿Cuál es el 25% de 80?",
+            options: [
+              "15",
+              "20",
+              "25",
+              "30"
+            ],
+            correctAnswer: 1,
+            explanation: "25% de 80 = (25/100) × 80 = 0,25 × 80 = 20"
+          },
+          {
+            id: 2,
+            question: "Si un producto cuesta $120 y tiene un descuento del 15%, ¿cuál es el precio final?",
+            options: [
+              "$102",
+              "$105",
+              "$108",
+              "$110"
+            ],
+            correctAnswer: 0,
+            explanation: "Descuento = 15% de $120 = $18. Precio final = $120 - $18 = $102"
+          },
+          {
+            id: 3,
+            question: "¿Qué porcentaje representa 18 de 72?",
+            options: [
+              "20%",
+              "25%",
+              "30%",
+              "35%"
+            ],
+            correctAnswer: 1,
+            explanation: "Porcentaje = (18/72) × 100% = 0,25 × 100% = 25%"
+          },
+          {
+            id: 4,
+            question: "Una población aumentó de 8.000 a 9.600 habitantes. ¿Cuál fue el porcentaje de aumento?",
+            options: [
+              "16%",
+              "18%",
+              "20%",
+              "22%"
+            ],
+            correctAnswer: 2,
+            explanation: "Aumento = 9.600 - 8.000 = 1.600. Porcentaje = (1.600/8.000) × 100% = 20%"
+          },
+          {
+            id: 5,
+            question: "Si el 40% de un número es 32, ¿cuál es el número?",
+            options: [
+              "70",
+              "75",
+              "80",
+              "85"
+            ],
+            correctAnswer: 2,
+            explanation: "Si 40% de x = 32, entonces 0,4x = 32, por lo tanto x = 32/0,4 = 80"
+          },
+          {
+            id: 6,
+            question: "Un artículo que costaba $200 ahora cuesta $170. ¿Cuál fue el porcentaje de descuento?",
+            options: [
+              "12%",
+              "15%",
+              "18%",
+              "20%"
+            ],
+            correctAnswer: 1,
+            explanation: "Descuento = $200 - $170 = $30. Porcentaje = ($30/$200) × 100% = 15%"
+          },
+          {
+            id: 7,
+            question: "¿Cuál es el 12,5% de 160?",
+            options: [
+              "18",
+              "20",
+              "22",
+              "24"
+            ],
+            correctAnswer: 1,
+            explanation: "12,5% de 160 = (12,5/100) × 160 = 0,125 × 160 = 20"
+          },
+          {
+            id: 8,
+            question: "Si una camisa cuesta $45 después de un descuento del 25%, ¿cuál era el precio original?",
+            options: [
+              "$55",
+              "$60",
+              "$65",
+              "$70"
+            ],
+            correctAnswer: 1,
+            explanation: "Si $45 representa el 75% del precio original, entonces precio original = $45 ÷ 0,75 = $60"
+          },
+          {
+            id: 9,
+            question: "En una clase de 30 estudiantes, 18 son mujeres. ¿Qué porcentaje son hombres?",
+            options: [
+              "35%",
+              "40%",
+              "45%",
+              "50%"
+            ],
+            correctAnswer: 1,
+            explanation: "Hombres = 30 - 18 = 12. Porcentaje = (12/30) × 100% = 40%"
+          },
+          {
+            id: 10,
+            question: "¿Cuál es el resultado de aumentar 50 en un 30%?",
+            options: [
+              "60",
+              "65",
+              "70",
+              "75"
+            ],
+            correctAnswer: 1,
+            explanation: "Aumento = 30% de 50 = 15. Resultado = 50 + 15 = 65"
+          },
+          {
+            id: 11,
+            question: "Si el IVA es del 19% y un producto cuesta $100 sin IVA, ¿cuál es el precio final?",
+            options: [
+              "$115",
+              "$119",
+              "$120",
+              "$125"
+            ],
+            correctAnswer: 1,
+            explanation: "IVA = 19% de $100 = $19. Precio final = $100 + $19 = $119"
+          },
+          {
+            id: 12,
+            question: "¿Qué número es el 75% de 240?",
+            options: [
+              "170",
+              "175",
+              "180",
+              "185"
+            ],
+            correctAnswer: 2,
+            explanation: "75% de 240 = (75/100) × 240 = 0,75 × 240 = 180"
+          },
+          {
+            id: 13,
+            question: "Una inversión de $1.000 generó $150 de interés. ¿Cuál fue la tasa de interés?",
+            options: [
+              "12%",
+              "15%",
+              "18%",
+              "20%"
+            ],
+            correctAnswer: 1,
+            explanation: "Tasa de interés = ($150/$1.000) × 100% = 0,15 × 100% = 15%"
+          },
+          {
+            id: 14,
+            question: "Si 60 es el 120% de un número, ¿cuál es ese número?",
+            options: [
+              "45",
+              "50",
+              "55",
+              "60"
+            ],
+            correctAnswer: 1,
+            explanation: "Si 120% de x = 60, entonces 1,2x = 60, por lo tanto x = 60/1,2 = 50"
+          },
+          {
+            id: 15,
+            question: "Un empleado recibe un aumento del 8% en su sueldo de $2.500. ¿Cuál es su nuevo sueldo?",
+            options: [
+              "$2.680",
+              "$2.700",
+              "$2.720",
+              "$2.750"
+            ],
+            correctAnswer: 1,
+            explanation: "Aumento = 8% de $2.500 = $200. Nuevo sueldo = $2.500 + $200 = $2.700"
+          }
         ]
       },
       {
